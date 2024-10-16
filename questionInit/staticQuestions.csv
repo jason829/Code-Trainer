@@ -1,0 +1,4 @@
+id,topic,question,childPass,childFail,parentID
+0,N/A,root node rename later but rn successid goes to functions and failure goes to environments,1,2,n/a
+1,functions,create a function that adds 2 integer/float parameters,4,5,0
+2,functions,create a function that adds 2 integer/float parameters,n/a,n/a,0
