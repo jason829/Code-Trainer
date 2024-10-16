@@ -29,7 +29,7 @@ Function - Deletes target node
     Info: N/A
 '''
 def deleteNode(root, target):
-    logger.info("*****Deleting node, ", target, " *****")
+    logger.info("***** Deleting node, ", target, " *****")
     if root is None:
         logger.info("Root is undefined")
         return None
@@ -41,11 +41,13 @@ def deleteNode(root, target):
 Function - Adds target node
     Parameters: 
         root - Root node
-        target - target node for deletion
+        node - Insertion node 
     Info: N/A
 '''
 def insert_node(root, node):
+    logger.info("***** Inserting node, ", node," *****")
     if root is None:
+        logger.info("Root is undefined")
         root = node
     else:
         root.add_child(node)
@@ -68,6 +70,33 @@ def readFile(file, mode):
 Main:
 Populate tree with questions read from csv file
 '''
-def main():
-    file = readFile("questionInit/staticQuestions.csv", "r")
+def populateTree(filePath):
+    logger.info("*** Creating Tree with,", filePath, " ***")
+    listOfAllNodes = []
+    # Populate list with nodes from CSV
+    try:
+        file = readFile(filePath, "r")
+        for line in file:
+            splitLines = line.strip().split(",");
+            # Skip the first line
+            if splitLines[0] == 'id': 
+                continue
+            # Root of tree is index 0
+            if int(splitLines[0]) == 0:
+                node = Tree(splitLines, True)
+                listOfAllNodes.append((0,node))
+            else:
+                node = Tree(splitLines, False)
+                listOfAllNodes.append((int(node.data[0]), node))
+        file.close()
+    except Exception as err:
+        logger.error("Error occurred: ", err)
     
+    # Create edges from parent to child
+    for node in listOfAllNodes:
+        nodeData = node[1]
+        if nodeData.data[3] == 'n/a' and nodeData.data[4] == 'n/a':
+            continue
+        nodeData.addChild(int(nodeData.data[3])); nodeData.addChild(int(nodeData.data[4]))
+
+populateTree("questionInit/staticQuestions.csv")
