@@ -81,7 +81,7 @@ def read_file(file, mode):
 
     if mode == "w":
         return file.close(), "Write mode, killing to avoid destructive edits"
-    return open(file, mode)
+    return open(file, mode, encoding="utf-8")
 
 
 def populate_tree(file_path):
