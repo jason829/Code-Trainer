@@ -1,11 +1,15 @@
-import os
-import logging
-from questionInit.questionTree import *
-logger = logging.getLogger(__name__)
+'''
+Main file
+currently mostly empty while I build the rest of
+the app
+'''
+from questionInit.question_tree import populate_tree
 
-'''
-Main function
-'''
+
 def main():
+    '''
+    Main function
+    '''
+
     print("hello world!")
-    
+    populate_tree("questionInit/staticQuestions.csv")
