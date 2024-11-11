@@ -6,6 +6,7 @@ asttokens==2.4.1
 attrs==24.2.0
 backcall==0.2.0
 beautifulsoup4==4.12.3
+bitsandbytes==0.44.1
 bleach==6.1.0
 blinker==1.8.2
 blobfile==3.0.0
@@ -64,6 +65,7 @@ nvidia-cusparse-cu12==12.3.0.142
 nvidia-nccl-cu12==2.20.5
 nvidia-nvjitlink-cu12==12.4.99
 nvidia-nvtx-cu12==12.4.99
+ollama==0.3.3
 packaging==24.1
 pandocfilters==1.5.1
 parso==0.8.4
