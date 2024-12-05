@@ -2,12 +2,11 @@
 Flask research and experimentation
 only will be a basic ui for now
 '''
-from flask import Flask, render_template
-from markupsafe import escape
+from flask import Blueprint, render_template
 
-app = Flask(__name__)
+main_blueprint = Blueprint("main", __name__)
 
-@app.route('/')
+@main_blueprint.route('/')
 def index():
     '''
     Home Page
