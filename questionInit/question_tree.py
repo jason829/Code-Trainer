@@ -112,7 +112,10 @@ def populate_tree(file_path):
     # Create edges from parent to child
     for node in list_of_all_nodes:
         node_data = node[1]
-        if node_data.data[3] == 'n/a' and node_data.data[4] == 'n/a':
-            continue
-        node_data.add_child(int(node_data.data[3]))
-        node_data.add_child(int(node_data.data[4]))
+        
+        if node_data.data[3] != 'n/a':
+            node_data.add_child(int(node_data.data[3]))
+        if node_data.data[4] != 'n/a':
+            node_data.add_child(int(node_data.data[4]))
+    
+populate_tree("questionInit/staticQuestions.csv")

@@ -1,23 +1,5 @@
-id,topic,question,childPass,childFail,parentID
-0,N/A,root node rename later but rn successid goes to functions and failure goes to conditionals,1,2,n/a
-1,functions,create a function that adds 2 integer/float parameters,4,5,0
-2,conditionals,write an if statement that checks if a number is even,6,7,0
-3,data types,define a variable with a string data type,8,9,0
-4,functions,create a function that multiplies 3 integer/float parameters,10,11,1
-5,functions,create a function that divides 2 integer/float parameters,12,13,1
-6,conditionals,write an if-else statement that checks if a number is positive or negative,14,15,2
-7,conditionals,write an if-else statement that checks if a string contains a specific character,16,17,2
-8,data types,define a list containing 5 integers,18,19,3
-9,data types,define a dictionary with 3 key-value pairs,20,21,3
-10,functions,create a recursive function that calculates the factorial of a number,n/a,n/a,4
-11,functions,create a function that returns the nth Fibonacci number using iteration,n/a,n/a,4
-12,functions,create a function that raises one number to the power of another,n/a,n/a,5
-13,functions,create a function that calculates the greatest common divisor (GCD) of two numbers,n/a,n/a,5
-14,conditionals,write a nested if statement that checks if a number is within a specific range,n/a,n/a,6
-15,conditionals,write an if-elif-else statement that categorizes a number as small, medium, or large,n/a,n/a,6
-16,conditionals,write an if-else statement that checks if a string is a palindrome,n/a,n/a,7
-17,conditionals,write an if statement with a logical AND condition,n/a,n/a,7
-18,data types,define a tuple containing 4 different data types,n/a,n/a,8
-19,data types,define a set containing unique elements from a list,n/a,n/a,8
-20,data types,define a variable with a boolean data type,n/a,n/a,9
-21,data types,define a variable with a None data type,n/a,n/a,9
+id,question,difficulty,easy_ID,harder_id
+0,Add 2 integer values together using variables,3,2,3
+1,Create an empty variable using 'None' value,1,n/a,n/a
+2,Create another empty variable and assign both empty variables with 2 integer values of your choice,1,1,n/a
+3,Assign 2 variables with integer values of your choice,2,n/a,n/a
