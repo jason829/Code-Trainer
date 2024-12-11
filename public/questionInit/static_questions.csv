@@ -1,4 +1,4 @@
-id,question,difficulty,easy_ID,harder_id
+id,question,difficulty,easy_id,harder_id
 0,Add 2 integer values together using variables,3,2,3
 1,Create an empty variable using 'None' value,1,n/a,n/a
 2,Create another empty variable and assign both empty variables with 2 integer values of your choice,1,1,n/a

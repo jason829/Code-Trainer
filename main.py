@@ -10,6 +10,5 @@ def main():
     '''
     Main function
     '''
-
-    print("hello world!")
+    
     populate_tree("questionInit/staticQuestions.csv")

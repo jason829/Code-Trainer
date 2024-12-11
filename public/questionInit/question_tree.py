@@ -9,6 +9,7 @@ where file_path is the path of the csv file used
 EXAMPLE:
 questionInit/staticQuestions.csv
 '''
+import csv
 
 class Tree:
     ''' TREE DEFINITION
@@ -23,21 +24,41 @@ class Tree:
         for a model to follow this defined structure. Not
         sure yet still early days.
     '''
-
-    def __init__(self, data, is_root):
-        self.data = data
+    def __init__(self, data):
+        self.id = data["id"]
+        self.question = data["question"]
+        self.difficulty = data["difficulty"]
         self.children = []
-        self.is_root = is_root
+        
+        if self.id == 0:
+            self.is_root = True
+        else:
+            self.is_root = False
+
     def add_child(self, node):
         '''
         Add child node to the list of children that the parent has
         '''
         self.children.append(node)
+
     def show_attributes(self):
         '''
         Return the objects attributes
         '''
         return self.data, self.children, self.is_root
+
+    def to_dict(self):
+        '''
+        Convert object to dictionary.
+        Used with flask's jsonify
+        '''
+        return {
+            "id" : self.id,
+            "question" : self.question,
+            "difficulty" : self.difficulty,
+            "children_arr" : self.children,
+            "is_root" : self.is_root
+        }
 
 
 def delete_node(root, target):
@@ -87,35 +108,35 @@ def read_file(file, mode):
 def populate_tree(file_path):
     '''
     Main:
-    Populate tree with questions read from csv file
+    Construct tree from csv
     '''
-
-    list_of_all_nodes = []
-    # Populate list with nodes from CSV
-    try:
-        file = read_file(file_path, "r")
-        for line in file:
-            split_lines = line.strip().split(",")
-            # Skip the first line
-            if split_lines[0] == 'id':
-                continue
-            # Root of tree is index 0
-            if int(split_lines[0]) == 0:
-                node = Tree(split_lines, True)
-                list_of_all_nodes.append((0,node))
-            else:
-                node = Tree(split_lines, False)
-                list_of_all_nodes.append((int(node.data[0]), node))
-        file.close()
-    except Exception as err:
-        print("Error: ", err)
-    # Create edges from parent to child
-    for node in list_of_all_nodes:
-        node_data = node[1]
-        
-        if node_data.data[3] != 'n/a':
-            node_data.add_child(int(node_data.data[3]))
-        if node_data.data[4] != 'n/a':
-            node_data.add_child(int(node_data.data[4]))
+    nodes = []
+    # CSV to Dictionary
+    with open(file_path, 'r') as file:
+        csv_reader = csv.DictReader(file)
+        data = [row for row in csv_reader]
     
-populate_tree("questionInit/staticQuestions.csv")
+    for element in data:
+        # Set root
+        if element["id"] == '0':
+            node = Tree({
+                "id" : 0,
+                "question" : element["question"],
+                "difficulty" : element["difficulty"]})
+        else:
+            node = Tree({
+                "id" : int(element["id"]),
+                "question" : element["question"],
+                "difficulty" : element["difficulty"]})
+        
+        # Add children
+        if element["easy_id"] != "n/a":
+            node.add_child(int(element["easy_id"]))
+        if element["harder_id"] != "n/a":
+            node.add_child(int(element["harder_id"]))
+        
+        nodes.append(node)
+        
+    return nodes
+    
+populate_tree("public/questionInit/static_questions.csv")
