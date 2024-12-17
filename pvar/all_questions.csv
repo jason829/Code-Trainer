@@ -1,14 +1,24 @@
 id,level,question,answer,hint
-0,1,"Output 'Hello World!' using 'print()'","print('Hello World!')","Do not worry about input and processing. Try using 'print('...')"
-1,1,"Output 'Keep pushing forward' using 'print()'","print('Keep pushing forward')","Do not worry about input and processing. Try using 'print('...')"
-2,1,"Output 'Welcome to Python programming' using 'print()'","print('Welcome to Python programming')","Do not worry about input and processing. Try using 'print('...')"
-3,1,"Output 'Success is a journey' using 'print()'","print('Success is a journey')","Do not worry about input and processing. Try using 'print('...')"
-4,1,"Output 'Believe in yourself' using 'print()'","print('Believe in yourself')","Do not worry about input and processing. Try using 'print('...')"
-5,1,"Output 'Coding is fun' using 'print()'","print('Coding is fun')","Do not worry about input and processing. Try using 'print('...')"
-6,1,"Output 'Never stop learning' using 'print()'","print('Never stop learning')","Do not worry about input and processing. Try using 'print('...')"
-7,1,"Output 'You can do it!' using 'print()'","print('You can do it!')","Do not worry about input and processing. Try using 'print('...')"
-8,1,"Output 'Stay positive and patient' using 'print()'","print('Stay positive and patient')","Do not worry about input and processing. Try using 'print('...')"
-9,1,"Output 'Practice makes perfect' using 'print()'","print('Practice makes perfect')","Do not worry about input and processing. Try using 'print('...')"
-10,1,"Output 'Dream big and work hard' using 'print()'","print('Dream big and work hard')","Do not worry about input and processing. Try using 'print('...')"
-11,1,"Output 'Learn by doing' using 'print()'","print('Learn by doing')","Do not worry about input and processing. Try using 'print('...')"
-12,1,"Output 'Every step counts' using 'print()'","print('Every step counts')","Do not worry about input and processing. Try using 'print('...')"
+0,1,Output 'Hello World!' using 'print()',^\s*print\s*\(\s*['\"]Hello World!['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+1,1,Output 'Keep pushing forward' using 'print()',^\s*print\s*\(\s*['\"]Keep pushing forward['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+2,1,Output 'Welcome to Python programming' using 'print()',^\s*print\s*\(\s*['\"]Welcome to Python programming['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+3,1,Output 'Success is a journey' using 'print()',^\s*print\s*\(\s*['\"]Success is a journey['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+4,1,Output 'Believe in yourself' using 'print()',^\s*print\s*\(\s*['\"]Believe in yourself['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+5,1,Output 'Coding is fun' using 'print()',^\s*print\s*\(\s*['\"]Coding is fun['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+6,1,Output 'Never stop learning' using 'print()',^\s*print\s*\(\s*['\"]Never stop learning['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+7,1,Output 'You can do it!' using 'print()',^\s*print\s*\(\s*['\"]You can do it!['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+8,1,Output 'Stay positive and patient' using 'print()',^\s*print\s*\(\s*['\"]Stay positive and patient['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+9,1,Output 'Practice makes perfect' using 'print()',^\s*print\s*\(\s*['\"]Practice makes perfect['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+10,1,Output 'Dream big and work hard' using 'print()',^\s*print\s*\(\s*['\"]Dream big and work hard['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+11,1,Output 'Learn by doing' using 'print()',^\s*print\s*\(\s*['\"]Learn by doing['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+12,1,Output 'Every step counts' using 'print()',^\s*print\s*\(\s*['\"]Every step counts['\"]\s*\)\s*;?\s*$,Do not worry about input and processing. Try using 'print('...')
+13,2,Ask the user to enter their name and then output that result using input() & print(),^\s*(\w+)\s*=\s*input\s*\(\s*['\"].*?['\"]\s*\)\s*\s*print\s*\(\s*\1\s*\)\s*;?\s*$,Do not worry about processing. Take a look at the template and see how it gets inputs
+14,2,Ask the user to enter their favourite colour and then output that result using input() & print(),^\s*(\w+)\s*=\s*input\s*\(\s*['\"].*?['\"]\s*\)\s*\s*print\s*\(\s*\1\s*\)\s*;?\s*$,Do not worry about processing. Take a look at the template and see how it gets inputs
+15,2,Ask the user to enter their favourite programming language is and then output that result using input() & print(),^\s*(\w+)\s*=\s*input\s*\(\s*['\"].*?['\"]\s*\)\s*\s*print\s*\(\s*\1\s*\)\s*;?\s*$,Do not worry about processing. Take a look at the template and see how it gets inputs
+16,2,Ask the user to enter any word and then output that result using input() & print(),^\s*(\w+)\s*=\s*input\s*\(\s*['\"].*?['\"]\s*\)\s*\s*print\s*\(\s*\1\s*\)\s*;?\s*$,Do not worry about processing. Take a look at the template and see how it gets inputs
+17,2,Ask the user to enter their age and then output that result using input() & print(),^\s*(\w+)\s*=\s*input\s*\(\s*['\"].*?['\"]\s*\)\s*\s*print\s*\(\s*\1\s*\)\s*;?\s*$,Do not worry about processing. Take a look at the template and see how it gets inputs
+18,2,Ask the user to enter their city of residence and then output that result using input() & print(),^\s*(\w+)\s*=\s*input\s*\(\s*['\"].*?['\"]\s*\)\s*\s*print\s*\(\s*\1\s*\)\s*;?\s*$,Do not worry about processing. Take a look at the template and see how it gets inputs
+19,2,Ask the user to enter their pet's name and then output that result using input() & print(),^\s*(\w+)\s*=\s*input\s*\(\s*['\"].*?['\"]\s*\)\s*\s*print\s*\(\s*\1\s*\)\s*;?\s*$,Do not worry about processing. Take a look at the template and see how it gets inputs
+20,2,Ask the user to enter their favorite movie and then output that result using input() & print(),^\s*(\w+)\s*=\s*input\s*\(\s*['\"].*?['\"]\s*\)\s*\s*print\s*\(\s*\1\s*\)\s*;?\s*$,Do not worry about processing. Take a look at the template and see how it gets inputs
+21,2,Ask the user to enter the name of their school and then output that result using input() & print(),^\s*(\w+)\s*=\s*input\s*\(\s*['\"].*?['\"]\s*\)\s*\s*print\s*\(\s*\1\s*\)\s*;?\s*$,Do not worry about processing. Take a look at the template and see how it gets inputs
+22,2,Ask the user to enter their hobby and then output that result using input() & print(),^\s*(\w+)\s*=\s*input\s*\(\s*['\"].*?['\"]\s*\)\s*\s*print\s*\(\s*\1\s*\)\s*;?\s*$,Do not worry about processing. Take a look at the template and see how it gets inputs
