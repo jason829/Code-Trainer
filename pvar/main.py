@@ -127,5 +127,14 @@ def main():
             passed_levels += 1
             score = questions(score, all_questions, 2)
             check = check_score(passed_levels, score, 1)
-
+            if not check:
+                keep_trying = str(input("Do you want to continue? Y - yes, N - no"))
+                if keep_trying.lower() == "y":
+                    score = 0
+                    continue
+                else:
+                    break
+            else:
+                print("well done")
+            
 main()
