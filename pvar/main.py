@@ -32,7 +32,7 @@ def questions(score, level, question_level):
     # Pick 5 random questions from CSV ensuring there's no dupes
     temp_q_arr = [x for x in level if x["level"] == question_level]
     test_q = []
-    for _ in range(5):
+    for _ in range(3):
         random_q = random.choice((temp_q_arr))
         test_q.append(random_q)
         temp_q_arr.remove(random_q)
@@ -43,8 +43,9 @@ def questions(score, level, question_level):
         print(f"{question["question"]}")
         lines = []
         # Multiple line answers
+        print("Press enter on empty line to submit\n")
         while True:
-            answer = input("Press enter on empty line to submit").strip()
+            answer = input().strip()
             if answer == "":
                 break
             lines.append(answer)
@@ -54,10 +55,10 @@ def questions(score, level, question_level):
         correct_answer = question["answer"]
         pattern = re.compile(r"" + correct_answer)
         if re.match(pattern, answer_line):
-            print("CORRECT\n\n")
+            print("************************\nCORRECT\n\n************************")
             score += 1
         else:
-            print(f"INCORRECT, Here is a hint \n{question["hint"]}\n\nYour input was: {answer_line}")
+            print(f"************************\nINCORRECT, Here is a hint \n{question["hint"]}\n\nYour input was: {answer_line}\n************************")
     
     return score
 
@@ -68,7 +69,7 @@ def check_score(score, level):
     '''
 
     if level == 1:
-        if score < 4:
+        if score < 3:
             print(f"You got {score}/3 correct. Please Retry the questions")
             time.sleep(1)
             return False
@@ -76,7 +77,7 @@ def check_score(score, level):
             print("WELL DONE!! Move on to level 2")
             return True
     elif level == 2:
-        if score < 4:
+        if score < 3:
             print(f"You got {score}/3 correct. Please Retry the questions")
             time.sleep(1)
             return False
@@ -113,7 +114,7 @@ def main():
     while not passed:
         print(f"Using the following template: \n{template}\nCan you complete level 1...\n")
         score = questions(score, all_questions, 1)
-        check = check_score(passed_levels, score, 1)
+        check = check_score(score, 1)
         
         if not check:
             keep_trying = str(input("Do you want to continue? Y - yes, N - no"))
@@ -126,7 +127,7 @@ def main():
             score = 0
             passed_levels += 1
             score = questions(score, all_questions, 2)
-            check = check_score(passed_levels, score, 1)
+            check = check_score(score, 1)
             if not check:
                 keep_trying = str(input("Do you want to continue? Y - yes, N - no"))
                 if keep_trying.lower() == "y":
@@ -136,5 +137,6 @@ def main():
                     break
             else:
                 print("well done")
+                passed = True
             
 main()
