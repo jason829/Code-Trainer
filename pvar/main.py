@@ -62,81 +62,55 @@ def questions(score, level, question_level):
     
     return score
 
-def check_score(score, level):
+def check_score(score):
     '''
     Checks score of the current level and determines if user should proceed.
     Returns False if failed and True if passed threshold
     '''
 
-    if level == 1:
-        if score < 3:
-            print(f"You got {score}/3 correct. Please Retry the questions")
-            time.sleep(1)
-            return False
-        else:
-            print("WELL DONE!! Move on to level 2")
-            return True
-    elif level == 2:
-        if score < 3:
-            print(f"You got {score}/3 correct. Please Retry the questions")
-            time.sleep(1)
-            return False
-        else:
-            print("WELL DONE!!")
-            return True
-
+    if score < 3:
+        print(f"You got {score}/3 correct. Please Retry the questions")
+        time.sleep(1)
+        return False
+    else:
+        print("WELL DONE!! Move on to the next level")
+        return True
+    
 def main():
     '''
     Main
     '''
-
-    template = """
-        def main():
-            # Step 1: Get input
-            # e.g userInput = input("Enter some input: ")
-            
-            # Step 2: Process input
-            # e.g processedData = # do something with the parameters
-            
-            # Step 3: Display or use the processed output
-            # e.g print('Processed output:', processedData)
-
-            # Call the main function to run the main
-
-        main()
-    """
-    passed_levels = 0
-    score = 0
-    passed = False
+    with open('pvar/template.txt') as f:
+        v = f.read()
 
     all_questions = open_csv("pvar/all_questions.csv")
+    passed_groups = 0
+    score = 0
+    passed = False
+    cur_group = 1
     
     while not passed:
-        print(f"Using the following template: \n{template}\nCan you complete level 1...\n")
-        score = questions(score, all_questions, 1)
-        check = check_score(score, 1)
+        print(f"Using the following template: \n{v}\nCan you complete the following questions...\n")
+        if cur_group > passed_groups:
+                passed_groups = cur_group
+        score = questions(score, all_questions, cur_group)
+        check = check_score(score)
         
         if not check:
-            keep_trying = str(input("Do you want to continue? Y - yes, N - no"))
+            keep_trying = str(input("Do you want to continue? Y - yes"))
             if keep_trying.lower() == "y":
+                group_select = int(input(f"Select a group to continue from. You can only continue from group {passed_groups} or less.\n"))
+                if group_select <= passed_groups:
+                    cur_group = group_select
+                else:
+                    print("Cannot select this level. Setting as group 1")
+                    cur_group = 1
                 score = 0
                 continue
             else:
                 break
         else:
             score = 0
-            passed_levels += 1
-            score = questions(score, all_questions, 2)
-            check = check_score(score, 1)
-            if not check:
-                keep_trying = str(input("Do you want to continue? Y - yes, N - no"))
-                if keep_trying.lower() == "y":
-                    score = 0
-                    continue
-                else:
-                    break
-            else:
-                print("well done")
-                passed = True
+            cur_group += 1
             
 main()
