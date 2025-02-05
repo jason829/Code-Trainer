@@ -1,0 +1,27 @@
+#submit-button {
+    display: block;
+    margin: 0 auto;
+    width: 80%;
+    height: 50px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#answer-input {
+    display: block;
+    margin: 20px auto;
+    width: 80%;
+    height: 150px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    resize: vertical;
+    white-space: pre-wrap;
+}

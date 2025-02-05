@@ -138,5 +138,3 @@ def populate_tree(file_path):
         nodes.append(node)
         
     return nodes
-    
-populate_tree("public/questionInit/static_questions.csv")

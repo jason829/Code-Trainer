@@ -112,5 +112,3 @@ def main():
         else:
             score = 0
             cur_group += 1
-            
-main()

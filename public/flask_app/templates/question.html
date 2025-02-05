@@ -8,7 +8,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Display Questions</title>
-        <script src="{{ url_for('static', filename='scripts/main.js') }}"></script>
+        <script src="{{ url_for('static', filename='scripts/main.js') }}" defer></script>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">    
@@ -19,15 +19,12 @@
         </div>
 
         <div>
-            <input type="text" placeholder="Enter answer **no workie rn**"></input>
+            <textarea id="answer-input" placeholder="Type here..."></textarea>
         </div>
 
         <div>
-            <button name="submit" type="submit" id="left">test traversal left</button>
+            <button id="submit-button" name="submit" type="submit">Submit</button>
         </div>
 
-        <div>
-            <button name="submit" type="submit" id="right">test traversal right</button>
-        </div>
     </body>
 </html>

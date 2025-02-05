@@ -1,51 +1,40 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
     /* 
-    API call for objects
-    display and simple traversal
+    Fetch questions from server and display them in the container.
     */
-    const container = document.getElementById('question-container');
-    const leftBtn = document.getElementById('left');
-    const rightBtn = document.getElementById('right');
-
     let data = [];
-    let currentIndex = 0;
-
-    fetch('/api/questions')
-        .then(response => response.json())
-        .then(fetchedData => {
+    const container = document.getElementById("question-container");
+    
+    
+    fetch("/api/questions")
+        .then((response) => response.json())
+        .then((fetchedData) => {
             data = fetchedData;
             displayQuestionById(0);
         })
-        .catch(error => {
-            console.error('Error:', error);
-            container.textContent = 'Failed to load questions.';
+        .catch((error) => {
+            console.error("Error:", error);
+            container.textContent = "Failed to load questions.";
         });
 
     function displayQuestionById(id) {
-        console.log(data)
-        const questionNode = data.find(item => item.id === id);
+        console.log(data);
+        const questionNode = data.find((item) => item.id === id);
         if (questionNode) {
             container.textContent = questionNode.question;
             currentIndex = data.indexOf(questionNode);
         } else {
-            container.textContent = 'No question';
+            container.textContent = "No question";
         }
     }
-
-    leftBtn.addEventListener('click', () => {
-        if (currentIndex > 0) {
-            displayQuestionById(data[currentIndex - 1].id);
-        } else {
-            console.log('can not go left');
-        }
-    });
-
-    rightBtn.addEventListener('click', () => {
-        if (currentIndex < data.length - 1) {
-            displayQuestionById(data[currentIndex + 1].id);
-        } else {
-            console.log('can not go right');
-        }
-    });
 });
 
+document.getElementById("submit-button").addEventListener("click", function() {
+    /* 
+    Submit button event listener
+    Send answer in the input text box to the server
+    */
+    console.log("clicked");
+    
+
+});
