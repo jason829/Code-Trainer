@@ -1,3 +1,6 @@
+"""
+Library of useful functions for server side of the application
+"""
 import re
 import time
 import csv
@@ -23,7 +26,39 @@ def open_csv(file_path):
     
     return data
 
-def questions(score, level, question_level):
+def check_answer(user_answer_data, server_data):# +++++++++++ FINISH THIS FUNCTION  need chagne how checking works as well+++++++++++++
+    """
+    Check user answer against the correct answer
+    """
+    user_answer = user_answer_data["answer"]
+    user_answer.strip()
+    clean_output = user_answer.strip().replace("\n", "")
+    
+    # Regex, check if answer matches pattern in CSV
+    correct_answer = server_data["answer"]
+    pattern = re.compile(r"" + correct_answer)
+    if re.match(pattern, clean_output):
+        print("Provided answer is correct")
+        return True
+    else:
+        print("Provided answer is incorrect")
+        return False
+
+def interpret_csv():
+    """
+    Formatting the data from the csv into 2 variables
+    1 for sending to client and other to remain on server
+    """
+    all_data = open_csv("public/flask_app/routes/pvar/all_questions.csv")
+    client_data = []
+    server_data = []
+    for data in all_data:
+        client_data.append({"id": data["id"], "level": data["level"], "question": data["question"], "hint": data["hint"]})
+        server_data.append({"id": data["id"], "level": data["level"], "answer": data["answer"]})
+        
+    return client_data, server_data
+
+def questions(score, level, question_level): # this is for the console version of code, moving to flask
     '''
     Display question, check answer and increment score
     Returns score value after user has answered

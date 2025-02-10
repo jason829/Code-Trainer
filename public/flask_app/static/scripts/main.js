@@ -1,21 +1,27 @@
+let questionData = [];
+let currentUserData = {id: 0, level: 1, answer: ""};
+
 document.addEventListener("DOMContentLoaded", () => {
     /* 
     Fetch questions from server and display them in the container.
     */
-    let data = [];
+
     const container = document.getElementById("question-container");
 
     fetch("/api/questions")
         .then((response) => response.json())
         .then((fetchedData) => {
-            data = fetchedData;
+            questionData = fetchedData;
             let id = 0;
-            
             // Display the first ID
-            const questionNode = data.find((item) => item.id === id);
+            const questionNode = questionData.find((item) => item.id === id);
+
             if (questionNode) {
                 container.textContent = questionNode.question;
-                currentIndex = data.indexOf(questionNode);
+                currentUserData.id = questionNode.id; 
+                currentUserData.level = questionNode.level;
+                
+                currentIndex = questionData.indexOf(questionNode);
             } else {
                 container.textContent = "No question";
             }
@@ -33,8 +39,8 @@ document.getElementById("submit-button").addEventListener("click", function() {
     */
     // console.log("clicked");
 
-    const userAnswer = document.getElementById("answer-input").value.trim();
-    // console.log(userAnswer); // check
+    currentUserData.answer = document.getElementById("answer-input").value.trim();
+    console.log(currentUserData); // check
 
     // POST request to server
     fetch("/json", {
@@ -42,22 +48,21 @@ document.getElementById("submit-button").addEventListener("click", function() {
         headers: {
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({ answer: userAnswer }),
+        body: JSON.stringify(currentUserData),
     })
-        .then(data => {
-            console.log("Success:", data);
+        .then(questionData => {
+            console.log("Success:", questionData);
         })
         .catch((error) => {
             console.error("Error:", error);
         });
-
 });
 
 /* function displayQuestionById(id) {
-    const questionNode = data.find((item) => item.id === id);
+    const questionNode = questionData.find((item) => item.id === id);
     if (questionNode) {
         container.textContent = questionNode.question;
-        currentIndex = data.indexOf(questionNode);
+        currentIndex = questionData.indexOf(questionNode);
     } else {
         container.textContent = "No question";
     }
