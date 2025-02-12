@@ -30,13 +30,15 @@ def check_answer(user_answer_data, server_data):# +++++++++++ FINISH THIS FUNCTI
     """
     Check user answer against the correct answer
     """
+    q_id = user_answer_data["id"]
     user_answer = user_answer_data["answer"]
     user_answer.strip()
     clean_output = user_answer.strip().replace("\n", "")
     
     # Regex, check if answer matches pattern in CSV
-    correct_answer = server_data["answer"]
+    correct_answer = server_data[q_id]["answer"]
     pattern = re.compile(r"" + correct_answer)
+    print(correct_answer, clean_output)
     if re.match(pattern, clean_output):
         print("Provided answer is correct")
         return True
