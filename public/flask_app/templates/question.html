@@ -4,47 +4,62 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Display Questions</title>
-        <script src="{{ url_for('static', filename='scripts/main.js') }}" defer></script>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">    
-    </head>
-    <body>
-        <div>
-            <a href="/"><button type="button">BACK</button></a>
-        </div>
-        <div id="base-container">
-            <h1 style="text-align: center;">Complete the following question in the input box below, click submit when you are ready to check your answer. Please use the following template to help guide your answer:</h1>
-            <h2>Template:</h2>
-            <p>def main():
-                # Step 1: Get input
-                # e.g userInput = input("Enter some input: ")
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Display Questions</title>
+    <script
+      src="{{ url_for('static', filename='scripts/main.js') }}"
+      defer
+    ></script>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div>
+      <a href="/"><button type="button">BACK</button></a>
+    </div>
+
+    <div id="base-container">
+      <h1 style="text-align: center">
+        Complete the following question in the input box below, click submit
+        when you are ready to check your answer. Please use the following
+        template to help guide your answer:
+      </h1>
+      <h2 style="text-align: center">Template:</h2>
+      <pre>
+            <code>
+                def main():
+                    # Step 1: Get input
+                    # e.g userInput = input("Enter some input: ")
+                    
+                    # Step 2: Process input
+                    # e.g processedData = # do something with the parameters
+                    
+                    # Step 3: Display or use the processed output
+                    # e.g print('Processed output:', processedData)
                 
-                # Step 2: Process input
-                # e.g processedData = # do something with the parameters
-                
-                # Step 3: Display or use the processed output
-                # e.g print('Processed output:', processedData)
-                
-             # Call the main function to run the main
-             main()</p>
-        </div>
-        
-        <div id="question-container" style="text-align: center;"></div>
+                # Call the main function to run the main
+                main()
+            </code>
+        </pre>
+    </div>
 
-        <div id="msg-container" style="text-align: center;"></div>
+    <div id="question-container" style="text-align: center"></div>
 
-        <div>
-            <textarea id="answer-input" placeholder="Type here..."></textarea>
-        </div>
+    <div id="msg-container" style="text-align: center"></div>
 
-        <div>
-            <button id="submit-button" name="submit" type="submit">Submit</button>
-        </div>
+    <div>
+      <textarea id="answer-input" placeholder="Type here..."></textarea>
+    </div>
 
-    </body>
+    <div>
+      <button id="submit-button" name="submit" type="submit">Submit</button>
+    </div>
+  </body>
 </html>

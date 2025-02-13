@@ -38,7 +38,6 @@ def check_answer(user_answer_data, server_data):# +++++++++++ FINISH THIS FUNCTI
     # Regex, check if answer matches pattern in CSV
     correct_answer = server_data[q_id]["answer"]
     pattern = re.compile(r"" + correct_answer)
-    print(correct_answer, clean_output)
     if re.match(pattern, clean_output):
         print("Provided answer is correct")
         return True
