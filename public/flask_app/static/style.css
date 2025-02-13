@@ -34,3 +34,22 @@
     font-size: 20px;
     white-space: pre-wrap;
 }
+
+#msg-container {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 20px;
+    white-space: pre-wrap;
+}
+
+#base-container {
+    margin: 5px auto;
+    padding: 5px;
+    font-size: 15px;
+    white-space: pre-line;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+}
