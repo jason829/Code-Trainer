@@ -55,7 +55,7 @@ def interpret_csv():
     server_data = []
     for data in all_data:
         client_data.append({"id": data["id"], "level": data["level"], "question": data["question"], "hint": data["hint"]})
-        server_data.append({"id": data["id"], "level": data["level"], "answer": data["answer"]})
+        server_data.append({"id": data["id"], "level": data["level"], "question": data["question"], "answer": data["answer"]})
         
     return client_data, server_data
 

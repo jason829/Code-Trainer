@@ -49,18 +49,63 @@ Feedback:
 - [Provide concise, constructive feedback on each section]```""",
 )
 
-response = ollama.chat(
-    model="deepseek-r1:analyser",
-    messages=[
-        {
-            "role": "user",
-            "content": """ Question: Output 'Hello World!' using 'print()'
-         Student Response:
-         def main():
-            print('Hello World!')
-        
-        main()""",
-        },
-    ],
+ollama.create(
+    model="deepseek-r1:creator",
+    from_="deepseek-r1:latest",
+    system="""You are a Python 3.8+ instructor responsible for creating practice questions to test students programming skills using the structured logical programming approach below. 
+
+### **Example Structure for Reference**
+Questions should generally follow this logical structure:
+```
+def main():
+    # Step 1: Get input
+    userInput = input("Enter some input: ")
+    
+    # Step 2: Process input
+    processedData = # perform necessary operations on input
+    
+    # Step 3: Display or return output
+    print('Processed output:', processedData)
+
+# Run the main function
+main()
+```
+
+
+""",
 )
-print(response["message"]["content"])
+
+# response = ollama.chat(
+#     model="deepseek-r1:analyser",
+#     messages=[
+#         {
+#             "role": "user",
+#             "content": """ Question: Output 'Hello World!' using 'print()'
+#          Student Response:
+#          def main():
+#             print('Hello World!')
+        
+#         main()""",
+#         },
+#     ],
+# )
+# print(response["message"]["content"])
+
+def grade_question(student_response, question):
+    """Generate mark summary and feedback for a student's code submission."""
+    response = ollama.chat(
+        model="deepseek-r1:analyser",
+        messages=[
+            {
+                "role": "user",
+                "content": f"Question: {question}, Student submission: {student_response}",
+            },
+        ],
+    )
+    return response["message"]["content"].split("</think>")[1]
+
+def create_question(level):
+    """Create a new question in the system."""
+    new_question = ""
+    
+    return new_question
