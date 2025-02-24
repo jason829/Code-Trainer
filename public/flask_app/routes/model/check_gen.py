@@ -54,6 +54,9 @@ ollama.create(
     from_="deepseek-r1:latest",
     system="""You are a Python 3.8+ instructor responsible for creating practice questions to test students programming skills using the structured logical programming approach below. 
 
+THERE IS A LOGICAL STRUCTURE THAT IS SORTED IN LEVELS, PLEASE FOLLOW THAT STRUCTURE BELOW
+JHFDAKSLFJDSAKLJFDAS;LKFJDSAKL;
+
 ### **Example Structure for Reference**
 Questions should generally follow this logical structure:
 ```
@@ -102,10 +105,17 @@ def grade_question(student_response, question):
             },
         ],
     )
-    return response["message"]["content"].split("</think>")[1]
+    return response["message"]["content"]
 
 def create_question(level):
     """Create a new question in the system."""
-    new_question = ""
-    
-    return new_question
+    response = ollama.chat(
+        model="deepseek-r1:creator",
+        messages=[
+            {
+                "role": "user",
+                "content": f"Create a question for level {level}",
+            },
+        ],
+    )
+    return response["message"]["content"]

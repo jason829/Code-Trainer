@@ -3,6 +3,8 @@ Server side code for the python learning project
 """
 import sys
 import os
+import psycopg2
+from dotenv import load_dotenv
 from flask import Blueprint, render_template, jsonify, request
 from .pvar.global_f import interpret_csv, check_answer
 from .model.check_gen import grade_question, create_question
@@ -13,6 +15,30 @@ from .model.check_gen import grade_question, create_question
 
 # print(open_csv("public/flask_app/routes/pvar/all_questions.csv"))
 # csv_data = open_csv("public/flask_app/routes/pvar/all_questions.csv")
+
+def connect_to_db():
+    load_dotenv()
+    DB_USER = os.getenv('fyp_db_user')
+    DB_PASS = os.getenv('fyp_db_pass')
+
+    conn = psycopg2.connect(database="fyp_db",  
+                            user=DB_USER, 
+                            password=DB_PASS,  
+                            host="0.0.0.0", port="5432") 
+
+    return conn
+
+
+# how to use db in code
+# conn = connect_to_db()
+# cur = conn.cursor() 
+
+# # cur.execute()
+# conn.commit() 
+
+# cur.close() 
+# conn.close() 
+
 main_blueprint = Blueprint("main", __name__)
 
 client_data, server_data = interpret_csv()[0], interpret_csv()[1]
@@ -50,8 +76,6 @@ def get_json():
     
     question = server_data[data["id"]]["question"]
     check = grade_question(data["answer"], question)
-    print(check)
-
     formatted_answer = check.split("</think>")[1]
     print(formatted_answer)
     
