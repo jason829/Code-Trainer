@@ -26,7 +26,8 @@ cur.execute(
     "CREATE TABLE users ("
     "id SERIAL PRIMARY KEY,"
     "username VARCHAR(50) UNIQUE NOT NULL,"
-    "max_level INT CHECK (max_level >= 0),"
+    "max_level INT CHECK (max_level > 0),"
+    "cur_level INT CHECK (cur_level > 0 AND cur_level <= max_level),"
     "skill TEXT);"
 )
 
