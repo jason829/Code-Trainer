@@ -40,8 +40,7 @@ submitButton.addEventListener("click", function () {
         */
     let result;
     currentUserData.answer = document.getElementById("answer-input").value.trim();
-    document.getElementById("submit-button").disabled = true; // Disable button to prevent accidental double submission
-
+    
     if (currentUserData.answer === "") {
         document.getElementById("msg-container").textContent =
             "Please enter an answer";
@@ -49,7 +48,8 @@ submitButton.addEventListener("click", function () {
         document.getElementById("submit-button").disabled = false; // Enable button after response
         return;
     }
-
+    
+    document.getElementById("submit-button").disabled = true; // Disable button to prevent accidental double submission
     // POST request to server
     fetch("/json", {
         method: "POST",
@@ -61,16 +61,16 @@ submitButton.addEventListener("click", function () {
         .then((response) => response.json())
         .then(async (questionResult) => {
             console.log("Success:", questionResult);
-            /* submitButton.classList.toggle("button--loading");
-                  document.getElementById("submit-button").disabled = false; // Enable button after response */
             result = questionResult.result;
             console.log(result);
+            
             if (!result) {
                 /* display hint */
                 console.log(questionData[currentUserData.id].hint);
                 document.getElementById("msg-container").textContent =
                     "Incorrect answer. HINT: " + questionData[currentUserData.id].hint;
             }
+            
             /* call function to change question if true */
             currentUserData.id++;
             await changeQuestion();
