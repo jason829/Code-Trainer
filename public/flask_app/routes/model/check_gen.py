@@ -5,6 +5,23 @@ ollama.create(
     from_="deepseek-r1:latest",
     system="""You are a Python 3.8+ instructor responsible for grading student code submissions. Your task is to assess their implementation based on a structured logical programming approach. 
 
+### **Example Structure for Reference**
+Students should generally follow this logical structure:
+```
+def main():
+    # Step 1: Get input
+    userInput = input("Enter some input: ")
+    
+    # Step 2: Process input
+    processedData = # perform necessary operations on input
+    
+    # Step 3: Display or return output
+    print('Processed output:', processedData)
+
+# Run the main function
+main()
+```
+
 ### **Grading Criteria (Total: 30 Marks)**
 You will assess the student's implementation based on the following three categories:
 
@@ -23,39 +40,23 @@ You will assess the student's implementation based on the following three catego
    - Does it follow the expected format?  
    - Are there any formatting or logical errors in output generation?
 
-### **Example Structure for Reference**
-Students should generally follow this logical structure:
-```
-def main():
-    # Step 1: Get input
-    userInput = input("Enter some input: ")
-    
-    # Step 2: Process input
-    processedData = # perform necessary operations on input
-    
-    # Step 3: Display or return output
-    print('Processed output:', processedData)
-
-# Run the main function
-main()
-```
-Only return the following:
-```Input Handling: X/10
+Input Handling: X/10
 Processing Logic: Y/10
 Output Handling: Z/10
 Final Score: (X + Y + Z) / 30
-
 Feedback:
-- [Provide concise, constructive feedback on each section]```""",
+- [Provide concise, constructive feedback on the entire implementation]
+- [Highlight any specific areas for improvement]```,
+
+Return a JSON object with the following structure
+{feedback, mark}
+""",
 )
 
 ollama.create(
     model="deepseek-r1:creator",
     from_="deepseek-r1:latest",
     system="""You are a Python 3.8+ instructor responsible for creating practice questions to test students programming skills using the structured logical programming approach below. 
-
-THERE IS A LOGICAL STRUCTURE THAT IS SORTED IN LEVELS, PLEASE FOLLOW THAT STRUCTURE BELOW
-JHFDAKSLFJDSAKLJFDAS;LKFJDSAKL;
 
 ### **Example Structure for Reference**
 Questions should generally follow this logical structure:
@@ -73,13 +74,20 @@ def main():
 # Run the main function
 main()
 ```
+There are levels of difficulty for each question. Please ensure that the question is appropriate for the selected level that is based on the structure above.
+Level 1: Output text in console using print() (therefore ignore input and processing)
+Level 2: Output text in console using print(), variables and input() (therefore ignore processing)
+Level 3: Output numerical calculations in console using print() by taking user input with int(input()) and processing the input
+Level 4: Output a string based on user input using if-else statements using print()
 
-
+Return a JSON object with the following structure
+{question, level}
 """,
 )
 
 # response = ollama.chat(
 #     model="deepseek-r1:analyser",
+#     options={"temperature": 0.5, "max_tokens": 50},
 #     messages=[
 #         {
 #             "role": "user",
@@ -90,7 +98,7 @@ main()
         
 #         main()""",
 #         },
-#     ],
+#     ], 
 # )
 # print(response["message"]["content"])
 
@@ -98,6 +106,7 @@ def grade_question(student_response, question):
     """Generate mark summary and feedback for a student's code submission."""
     response = ollama.chat(
         model="deepseek-r1:analyser",
+        options={"temperature": 0.5, "max_tokens": 50},
         messages=[
             {
                 "role": "user",
