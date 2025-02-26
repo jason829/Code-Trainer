@@ -74,10 +74,10 @@ def get_json():
     """
     data = request.get_json()
     
-    question = server_data[data["id"]]["question"]
-    check = grade_question(data["answer"], question)
-    formatted_answer = check.split("</think>")[1]
-    print(formatted_answer)
+    # question = server_data[data["id"]]["question"]
+    # check = grade_question(data["answer"], question)
+    # formatted_answer = check.split("</think>")[1]
+    # print(formatted_answer)
     
     answer = check_answer(data, server_data)
     return {"result": answer}

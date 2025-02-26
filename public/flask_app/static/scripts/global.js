@@ -1,0 +1,3 @@
+/* 
+Script containing global functions
+*/

@@ -9,11 +9,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Display Questions</title>
     <script
-      src="{{ url_for('static', filename='scripts/main.js') }}"
+      src="{{ url_for('static', filename='scripts/question.js') }}"
       defer
     ></script>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
     <link
       rel="stylesheet"
       type="text/css"
@@ -22,7 +26,11 @@
   </head>
   <body>
     <div>
-      <a href="/"><button type="button">BACK</button></a>
+      <a href="/">
+        <button type="button" class="btn">
+          <i class="fa fa-arrow-left"></i> Back
+        </button>
+      </a>
     </div>
 
     <div id="base-container">
@@ -59,7 +67,13 @@
     </div>
 
     <div>
-      <button id="submit-button" name="submit" type="submit">Submit</button>
+      <button
+        type="button"
+        id="submit-button"
+        onclick="this.classList.toggle('button--loading')"
+      >
+        <span class="button__text">Save</span>
+      </button>
     </div>
   </body>
 </html>
