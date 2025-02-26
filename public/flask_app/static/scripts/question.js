@@ -45,7 +45,6 @@ submitButton.addEventListener("click", function () {
         document.getElementById("msg-container").textContent =
             "Please enter an answer";
         submitButton.classList.toggle("button--loading");
-        document.getElementById("submit-button").disabled = false; // Enable button after response
         return;
     }
     
