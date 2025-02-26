@@ -1,11 +1,11 @@
 let questionData = [];
-let currentUserData = {id: 0, level: 1, answer: ""};
+let currentUserData = { id: 0, level: 1, answer: "" };
 const submitButton = document.getElementById("submit-button");
 
 document.addEventListener("DOMContentLoaded", () => {
     /* 
-    Fetch questions from server and display them in the container.
-    */
+        Fetch questions from server and display them in the container.
+        */
 
     const container = document.getElementById("question-container");
 
@@ -19,9 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (questionNode) {
                 container.textContent = questionNode.question;
-                currentUserData.id = questionNode.id; 
+                currentUserData.id = questionNode.id;
                 currentUserData.level = questionNode.level;
-                
+
                 currentIndex = questionData.indexOf(questionNode);
             } else {
                 container.textContent = "No question";
@@ -33,15 +33,23 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 });
 
-submitButton.addEventListener("click", function() {
+submitButton.addEventListener("click", function () {
     /* 
-    Submit button event listener
-    Send answer in the input text box to the server
-    */
+        Submit button event listener
+        Send answer in the input text box to the server
+        */
     let result;
     currentUserData.answer = document.getElementById("answer-input").value.trim();
     document.getElementById("submit-button").disabled = true; // Disable button to prevent accidental double submission
-    
+
+    if (currentUserData.answer === "") {
+        document.getElementById("msg-container").textContent =
+            "Please enter an answer";
+        submitButton.classList.toggle("button--loading");
+        document.getElementById("submit-button").disabled = false; // Enable button after response
+        return;
+    }
+
     // POST request to server
     fetch("/json", {
         method: "POST",
@@ -51,38 +59,45 @@ submitButton.addEventListener("click", function() {
         body: JSON.stringify(currentUserData),
     })
         .then((response) => response.json())
-        .then(async questionResult => {
+        .then(async (questionResult) => {
             console.log("Success:", questionResult);
+            /* submitButton.classList.toggle("button--loading");
+                  document.getElementById("submit-button").disabled = false; // Enable button after response */
             result = questionResult.result;
-            console.log(currentUserData)
-            if (result === true) {
-                /* call function to change question if true */
-                currentUserData.id++;
-                await changeQuestion();
-            } else {
+            console.log(result);
+            if (!result) {
                 /* display hint */
-                console.log(questionData[currentUserData.id].hint)
-                document.getElementById("msg-container").textContent = "Incorrect answer. HINT: " + questionData[currentUserData.id].hint;
+                console.log(questionData[currentUserData.id].hint);
+                document.getElementById("msg-container").textContent =
+                    "Incorrect answer. HINT: " + questionData[currentUserData.id].hint;
             }
-            document.getElementById("submit-button").disabled = false; // Enable button after response
+            /* call function to change question if true */
+            currentUserData.id++;
+            await changeQuestion();
         })
         .catch((error) => {
             console.error("Error:", error);
+        })
+        .finally(() => {
+            submitButton.classList.toggle("button--loading");
+            document.getElementById("submit-button").disabled = false; // Enable button after response
         });
 });
 
 async function changeQuestion() {
     /* 
-    Change the question displayed in the container
-    */
+        Change the question displayed in the container
+        */
     const container = document.getElementById("question-container");
-    const questionNode = questionData.find((item) => item.id === currentUserData.id);
+    const questionNode = questionData.find(
+        (item) => item.id === currentUserData.id
+    );
 
     if (questionNode) {
         container.textContent = questionNode.question;
-        currentUserData.id = questionNode.id; 
+        currentUserData.id = questionNode.id;
         currentUserData.level = questionNode.level;
-        
+
         currentIndex = questionData.indexOf(questionNode);
     } else {
         container.textContent = "No question";

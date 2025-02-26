@@ -6,8 +6,8 @@ import os
 import psycopg2
 from dotenv import load_dotenv
 from flask import Blueprint, render_template, jsonify, request
-from .pvar.global_f import interpret_csv, check_answer
-from .model.check_gen import grade_question, create_question
+from .pvar.global_f import *
+from .model.check_gen import *
 
 # sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 # from questionInit.question_tree import populate_tree
@@ -74,10 +74,10 @@ def get_json():
     """
     data = request.get_json()
     
-    # question = server_data[data["id"]]["question"]
-    # check = grade_question(data["answer"], question)
-    # formatted_answer = check.split("</think>")[1]
-    # print(formatted_answer)
+
+    question = server_data[data["id"]]["question"]
+    check = grade_question(data["answer"], question)
+    print(check)
+    formatted_answer = check.split("</think>")[1]
     
-    answer = check_answer(data, server_data)
-    return {"result": answer}
+    return {"result": formatted_answer}

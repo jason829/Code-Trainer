@@ -53,6 +53,17 @@
     background: #007a63;
 }
 
+#submit-button:hover {
+    background-color: #007a63;
+}
+
+#submit-button:disabled,
+#submit-button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
 .button__text {
     font: bold 20px "Quicksand", san-serif;
     color: #ffffff;
@@ -78,10 +89,6 @@
     border-top-color: #ffffff;
     border-radius: 50%;
     animation: button-loading-spinner 1s ease infinite;
-}
-
-#submit-button:hover {
-    background-color: #007a63;
 }
 
 @keyframes button-loading-spinner {

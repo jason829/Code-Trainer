@@ -40,6 +40,9 @@ You will assess the student's implementation based on the following three catego
    - Does it follow the expected format?  
    - Are there any formatting or logical errors in output generation?
 
+If answer is not in the **Example Structure for Reference** format, deduct 0 - 5 marks based on the severity of the deviation.
+If the provided student response is empty, ignore all grading criteria and give 0 marks.
+
 Input Handling: X/10
 Processing Logic: Y/10
 Output Handling: Z/10
@@ -49,7 +52,7 @@ Feedback:
 - [Highlight any specific areas for improvement]```,
 
 Return a JSON object with the following structure
-{feedback, mark}
+{feedback, total_mark}
 """,
 )
 
