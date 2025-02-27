@@ -59,17 +59,21 @@ submitButton.addEventListener("click", function () {
     })
         .then((response) => response.json())
         .then(async (questionResult) => {
-            console.log("Success:", questionResult);
+            console.log("Successful response");
             result = questionResult.result;
             console.log(result);
             
-            if (!result) {
-                /* display hint */
-                console.log(questionData[currentUserData.id].hint);
-                document.getElementById("msg-container").textContent =
-                    "Incorrect answer. HINT: " + questionData[currentUserData.id].hint;
-            }
+            document.getElementById("msg-container").textContent =
+                    "Feedback: " + result.feedback;
+
+            // if (!result) {
+            //     /* display hint */
+            //     console.log(questionData[currentUserData.id].hint);
+            //     document.getElementById("msg-container").textContent =
+            //         "Incorrect answer. HINT: " + questionData[currentUserData.id].hint;
+            // }
             
+
             /* call function to change question if true */
             currentUserData.id++;
             await changeQuestion();

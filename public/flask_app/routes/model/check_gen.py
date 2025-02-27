@@ -1,4 +1,6 @@
 import ollama
+import re
+import json
 
 ollama.create(
     model="deepseek-r1:analyser",
@@ -103,7 +105,13 @@ Return a JSON object with the following structure
 #         },
 #     ], 
 # )
-# print(response["message"]["content"])
+
+# answer = response["message"]["content"]
+# match = re.search(r'\{\s*"feedback":\s*".*?",\s*"total_mark":\s*\d+\s*\}', answer, re.DOTALL)
+# if match:
+#     json_string = match.group(0)
+#     json_object = json.loads(json_string)
+#     print(json_object) 
 
 def grade_question(student_response, question):
     """Generate mark summary and feedback for a student's code submission."""
@@ -117,7 +125,13 @@ def grade_question(student_response, question):
             },
         ],
     )
-    return response["message"]["content"]
+    
+    answer = response["message"]["content"]
+    match = re.search(r'\{\s*"feedback":\s*".*?",\s*"total_mark":\s*\d+\s*\}', answer, re.DOTALL)
+    if match:
+        json_string = match.group(0)
+        json_object = json.loads(json_string)
+    return json_object
 
 def create_question(level):
     """Create a new question in the system."""

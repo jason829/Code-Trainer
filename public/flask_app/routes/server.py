@@ -73,11 +73,7 @@ def get_json():
     I need to change this from check_answer to using grade_question when its done ++++++++++++++++++++++++++
     """
     data = request.get_json()
-    
-
     question = server_data[data["id"]]["question"]
     check = grade_question(data["answer"], question)
-    print(check)
-    formatted_answer = check.split("</think>")[1]
     
-    return {"result": formatted_answer}
+    return {"result": check}
