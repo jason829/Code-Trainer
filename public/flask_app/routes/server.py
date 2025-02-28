@@ -9,12 +9,10 @@ from flask import Blueprint, render_template, jsonify, request
 from .pvar.global_f import *
 from .model.check_gen import *
 
-# sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
-# from questionInit.question_tree import populate_tree
-# answer = populate_tree(os.path.abspath(os.path.join(os.path.abspath(__file__), "../../../questionInit/static_questions.csv")))
+main_blueprint = Blueprint("main", __name__)
 
-# print(open_csv("public/flask_app/routes/pvar/all_questions.csv"))
-# csv_data = open_csv("public/flask_app/routes/pvar/all_questions.csv")
+client_data, server_data = interpret_csv()[0], interpret_csv()[1]
+user_data = {"userID": 0, "level": 1, "score": 0}
 
 def connect_to_db():
     load_dotenv()
@@ -38,11 +36,6 @@ def connect_to_db():
 
 # cur.close() 
 # conn.close() 
-
-main_blueprint = Blueprint("main", __name__)
-
-client_data, server_data = interpret_csv()[0], interpret_csv()[1]
-user_data = {"userID": 0, "level": 1, "score": 0}
 
 @main_blueprint.route("/")
 def index():

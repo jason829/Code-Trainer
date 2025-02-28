@@ -2,6 +2,7 @@
 Create postgreSQL empty database and tables
 Ensure that postgresql is installed on your machine (I am using 16.6)
 This script assumes you have created a database called fyp_db and is accessible
+Once run, server.py will be able to connect to the database
 """
 
 import os
