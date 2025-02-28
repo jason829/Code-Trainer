@@ -1,5 +1,5 @@
 let questionData = [];
-let currentUserData = { id: 0, level: 1, answer: "" };
+let currentUserData = { id: 0, level: 1, answer: "", correctAnswer: 0 };
 const submitButton = document.getElementById("submit-button");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -40,14 +40,14 @@ submitButton.addEventListener("click", function () {
         */
     let result;
     currentUserData.answer = document.getElementById("answer-input").value.trim();
-    
+
     if (currentUserData.answer === "") {
         document.getElementById("msg-container").textContent =
             "Please enter an answer";
         submitButton.classList.toggle("button--loading");
         return;
     }
-    
+
     document.getElementById("submit-button").disabled = true; // Disable button to prevent accidental double submission
     // POST request to server
     fetch("/json", {
@@ -62,9 +62,9 @@ submitButton.addEventListener("click", function () {
             console.log("Successful response");
             result = questionResult.result;
             console.log(result);
-            
+
             document.getElementById("msg-container").textContent =
-                    "Feedback: " + result.feedback;
+                "Feedback: " + result.feedback;
 
             // if (!result) {
             //     /* display hint */
@@ -72,7 +72,14 @@ submitButton.addEventListener("click", function () {
             //     document.getElementById("msg-container").textContent =
             //         "Incorrect answer. HINT: " + questionData[currentUserData.id].hint;
             // }
-            
+
+            if (result.total_mark >= 20) {
+                currentUserData.correctAnswer++;
+                if (currentUserData.correctAnswer >= 3) {
+                    document.getElementById("msg-container").textContent =
+                        "You have successfully completed this level!";
+                }
+            }
 
             /* call function to change question if true */
             currentUserData.id++;

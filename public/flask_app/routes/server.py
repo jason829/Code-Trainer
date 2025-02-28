@@ -70,7 +70,6 @@ def get_questions():
 def get_json():
     """
     Get JSON data from client
-    I need to change this from check_answer to using grade_question when its done ++++++++++++++++++++++++++
     """
     data = request.get_json()
     question = server_data[data["id"]]["question"]

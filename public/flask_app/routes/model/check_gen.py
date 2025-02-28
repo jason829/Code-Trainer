@@ -44,6 +44,7 @@ You will assess the student's implementation based on the following three catego
 
 If answer is not in the **Example Structure for Reference** format, deduct 0 - 5 marks based on the severity of the deviation.
 If the provided student response is empty, ignore all grading criteria and give 0 marks.
+Student responses will be in a one line form, assume that the student has followed the structure provided above using new line statements.
 
 Input Handling: X/10
 Processing Logic: Y/10
@@ -85,6 +86,12 @@ Level 2: Output text in console using print(), variables and input() (therefore 
 Level 3: Output numerical calculations in console using print() by taking user input with int(input()) and processing the input
 Level 4: Output a string based on user input using if-else statements using print()
 
+Use the following examples for reference:
+Level 1: Output 'Hello World!' using 'print()'
+Level 2: Ask the user to enter their name and then output that result using input() & print()
+Level 3: Get 2 integer inputs and add them together in a seperate variable and print the result
+Level 4: Ask the user to enter a number and output 'True' if the number is more than 10 and 'False' if the number is less than 10
+
 Return a JSON object with the following structure
 {question, level}
 """,
@@ -100,10 +107,10 @@ Return a JSON object with the following structure
 #          Student Response:
 #          def main():
 #             print('Hello World!')
-        
+
 #         main()""",
 #         },
-#     ], 
+#     ],
 # )
 
 # answer = response["message"]["content"]
@@ -111,7 +118,21 @@ Return a JSON object with the following structure
 # if match:
 #     json_string = match.group(0)
 #     json_object = json.loads(json_string)
-#     print(json_object) 
+#     print(json_object)
+
+# response = ollama.chat(
+#     model="deepseek-r1:creator",
+#     options={"temperature": 0.5, "max_tokens": 50},
+#     messages=[
+#         {
+#             "role": "user",
+#             "content": f"Create a question for level 1",
+#         },
+#     ],
+# )
+
+# answer = response["message"]["content"]
+# print(answer)
 
 def grade_question(student_response, question):
     """Generate mark summary and feedback for a student's code submission."""
@@ -125,18 +146,22 @@ def grade_question(student_response, question):
             },
         ],
     )
-    
+
     answer = response["message"]["content"]
-    match = re.search(r'\{\s*"feedback":\s*".*?",\s*"total_mark":\s*\d+\s*\}', answer, re.DOTALL)
+    match = re.search(
+        r'\{\s*"feedback":\s*".*?",\s*"total_mark":\s*\d+\s*\}', answer, re.DOTALL
+    )
     if match:
         json_string = match.group(0)
         json_object = json.loads(json_string)
     return json_object
 
+
 def create_question(level):
     """Create a new question in the system."""
     response = ollama.chat(
         model="deepseek-r1:creator",
+        options={"temperature": 0.5, "max_tokens": 50},
         messages=[
             {
                 "role": "user",
@@ -144,4 +169,13 @@ def create_question(level):
             },
         ],
     )
-    return response["message"]["content"]
+
+    answer = response["message"]["content"]
+    match = re.search(
+        r'\{\s*"question":\s*".*?",\s*"level":\s*\d+\s*\}', answer, re.DOTALL
+    )
+    if match:
+        json_string = match.group(0)
+        json_object = json.loads(json_string)
+
+    return json_object
