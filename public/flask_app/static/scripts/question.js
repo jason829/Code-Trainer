@@ -66,24 +66,19 @@ submitButton.addEventListener("click", function () {
             document.getElementById("msg-container").textContent =
                 "Feedback: " + result.feedback;
 
-            // if (!result) {
-            //     /* display hint */
-            //     console.log(questionData[currentUserData.id].hint);
-            //     document.getElementById("msg-container").textContent =
-            //         "Incorrect answer. HINT: " + questionData[currentUserData.id].hint;
-            // }
-
             if (result.total_mark >= 20) {
                 currentUserData.correctAnswer++;
                 if (currentUserData.correctAnswer >= 3) {
                     document.getElementById("msg-container").textContent =
                         "You have successfully completed this level!";
+                    currentUserData.level++;
+                    currentUserData.correctAnswer = 0;
                 }
             }
 
             /* call function to change question if true */
             currentUserData.id++;
-            await changeQuestion();
+            await changeQuestion(currentUserData.level);
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -94,21 +89,24 @@ submitButton.addEventListener("click", function () {
         });
 });
 
-async function changeQuestion() {
+async function changeQuestion(requiredLevel) {
     /* 
         Change the question displayed in the container
-        */
+    */
+
     const container = document.getElementById("question-container");
-    const questionNode = questionData.find(
-        (item) => item.id === currentUserData.id
+    const questionNode = questionData.filter(
+        (item) => item.level === requiredLevel
     );
 
     if (questionNode) {
-        container.textContent = questionNode.question;
-        currentUserData.id = questionNode.id;
-        currentUserData.level = questionNode.level;
+        const random = Math.floor(Math.random() * questionNode.length);
+        selectedQuestion = questionNode[random];
+        container.textContent = selectedQuestion.question;
+        currentUserData.id = selectedQuestion.id;
+        currentUserData.level = selectedQuestion.level;
 
-        currentIndex = questionData.indexOf(questionNode);
+        currentIndex = questionData.indexOf(selectedQuestion);
     } else {
         container.textContent = "No question";
     }
