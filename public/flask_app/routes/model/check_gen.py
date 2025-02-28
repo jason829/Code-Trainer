@@ -46,6 +46,14 @@ If answer is not in the **Example Structure for Reference** format, deduct 0 - 5
 If the provided student response is empty, ignore all grading criteria and give 0 marks.
 Student responses will be in a one line form, assume that the student has followed the structure provided above using new line statements.
 
+There are levels of difficulty for each question. Please use these as reference for marking.
+Level 1: Output text in console using print() (therefore ignore input and processing)
+Level 2: Output text in console using print(), variables and input() (therefore ignore processing)
+Level 3: Output numerical calculations in console using print() by taking user input with int(input()) and processing the input
+Level 4: Output a string based on user input using if-else statements using print()
+
+The maximum total mark is 30 and should be the sum of the following below. However, if the question does not require a section then assign that section 10 marks.
+
 Input Handling: X/10
 Processing Logic: Y/10
 Output Handling: Z/10

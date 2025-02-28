@@ -5,7 +5,7 @@ const submitButton = document.getElementById("submit-button");
 document.addEventListener("DOMContentLoaded", () => {
     /* 
         Fetch questions from server and display them in the container.
-        */
+    */
 
     const container = document.getElementById("question-container");
 
@@ -77,7 +77,6 @@ submitButton.addEventListener("click", function () {
             }
 
             /* call function to change question if true */
-            currentUserData.id++;
             await changeQuestion(currentUserData.level);
         })
         .catch((error) => {
