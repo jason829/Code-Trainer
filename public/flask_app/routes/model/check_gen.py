@@ -142,6 +142,7 @@ Return a JSON object with the following structure
 # answer = response["message"]["content"]
 # print(answer)
 
+
 def grade_question(student_response, question):
     """Generate mark summary and feedback for a student's code submission."""
     response = ollama.chat(

@@ -15,7 +15,7 @@ db_pass = os.environ["DB_PASSWORD"]
 conn = psycopg2.connect(
     host="localhost",
     database="fyp_db",
-    user=db_user,  
+    user=db_user,
     password=db_pass,
 )
 

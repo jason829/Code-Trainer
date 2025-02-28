@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("/api/questions")
         .then((response) => response.json())
         .then((fetchedData) => {
-            questionData = fetchedData;
+            questionData = fetchedData; // Store fetched data in global variable
             let id = 0;
             // Display the first ID
             const questionNode = questionData.find((item) => item.id === id);
@@ -37,10 +37,11 @@ submitButton.addEventListener("click", function () {
     /* 
         Submit button event listener
         Send answer in the input text box to the server
-        */
+    */
     let result;
     currentUserData.answer = document.getElementById("answer-input").value.trim();
 
+    // Check if the input is empty
     if (currentUserData.answer === "") {
         document.getElementById("msg-container").textContent =
             "Please enter an answer";
@@ -66,14 +67,17 @@ submitButton.addEventListener("click", function () {
             document.getElementById("msg-container").textContent =
                 "Feedback: " + result.feedback;
 
+            // Check if marks is high enough
             if (result.total_mark >= 20) {
                 currentUserData.correctAnswer++;
-                if (currentUserData.correctAnswer >= 3) {
-                    document.getElementById("msg-container").textContent =
-                        "You have successfully completed this level!";
-                    currentUserData.level++;
-                    currentUserData.correctAnswer = 0;
-                }
+            }
+
+            // Check if user has answered 3 questions correctly, increment level
+            if (currentUserData.correctAnswer >= 3) {
+                document.getElementById("msg-container").textContent =
+                    "You have successfully completed this level!";
+                currentUserData.level++;
+                currentUserData.correctAnswer = 0;
             }
 
             /* call function to change question if true */
@@ -83,8 +87,9 @@ submitButton.addEventListener("click", function () {
             console.error("Error:", error);
         })
         .finally(() => {
+            // Enable button and remove loading animation
             submitButton.classList.toggle("button--loading");
-            document.getElementById("submit-button").disabled = false; // Enable button after response
+            document.getElementById("submit-button").disabled = false;
         });
 });
 
