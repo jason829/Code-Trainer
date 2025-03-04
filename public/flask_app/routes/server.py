@@ -72,7 +72,12 @@ def check_answer():
     data = request.get_json()
     check = grade_question(data["answer"], data["question"])
 
+    if "error" in check:
+        # If an error occured then let the user know. Stops crashing
+        check = {"feedback": "ERROR OCCURRED WITH MARKING", "total_mark": 0}
+
     return {"result": check}
+
 
 @main_blueprint.route("/json/create", methods=["GET"])
 def create_question():
@@ -81,5 +86,9 @@ def create_question():
     """
     level = request.get_json()
     question = create_question(level)
-    
+
+    if "error" in question:
+        # If an error occured then let the user know. Stops crashing
+        check = {"question": "ERROR OCCURRED WITH GENERATING QUESTION", "level": 0}
+
     return {"result": "success", "data": question}

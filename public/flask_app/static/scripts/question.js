@@ -80,6 +80,7 @@ submitButton.addEventListener("click", function () {
                     "You have successfully completed this level!";
                 currentUserData.level++;
                 currentUserData.correctAnswer = 0;
+                await addNewQuestion(currentUserData.level)
             }
 
             /* call function to change question if true */
@@ -118,7 +119,7 @@ async function changeQuestion(requiredLevel) {
     }
 }
 
-function addNewQuestion(level) {
+async function addNewQuestion(level) {
     /* 
         Add new question to the questionData array
     */
@@ -132,6 +133,11 @@ function addNewQuestion(level) {
     })
         .then((response) => response.json())
         .then((newQuestion) => {
+            if (newQuestion.level === 0) {
+                console.error("Error has occurred server side");
+                return;
+            }
+
             console.log(newQuestion);
             // questionData.push(newQuestion);
             console.log("New question added");

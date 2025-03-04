@@ -137,16 +137,17 @@ Level 4: Ask the user to enter a number and output 'True' if the number is more 
 
 response = ollama.chat(
         model="deepseek-r1:creator",
-        options={"temperature": 0.5, "max_tokens": 50},
+        options={"temperature": 0.5},
         messages=[
             {
                 "role": "user",
-                "content": f"Create a question for level 1",
+                "content": f"Create 3 questions for level 1",
             },
         ],
         format=Question_Format.model_json_schema()
     )
 
+# print(response.message.content)
 answer = Question_Format.model_validate_json(response.message.content) # Just to check if the format is correct
 json_object = json.loads(response.message.content)
 print(json_object)
