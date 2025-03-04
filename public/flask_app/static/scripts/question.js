@@ -64,15 +64,14 @@ submitButton.addEventListener("click", function () {
         .then(async (questionResult) => {
             console.log("Successful response");
             result = questionResult.result;
-            console.log(result);
 
             document.getElementById("msg-container").textContent =
                 "Feedback: " + result.feedback;
 
-            // Check if marks is high enough
-            if (result.total_mark >= 20) {
-                currentUserData.correctAnswer++;
-            }
+            // Check mark thresholds
+            if (result.total_mark >= 20) currentUserData.correctAnswer++;
+
+            if (result.total_mark <= 10) currentUserData.correctAnswer--;
 
             // Check if user has answered 3 questions correctly, increment level
             if (currentUserData.correctAnswer >= 3) {
@@ -81,11 +80,18 @@ submitButton.addEventListener("click", function () {
                 currentUserData.level++;
                 currentUserData.correctAnswer = 0;
                 await addNewQuestion(currentUserData.level)
+            } else if (currentUserData.correctAnswer <= -3) {
+                document.getElementById("msg-container").textContent =
+                    "You have gotten 3 wrong in a row... Don't give up yet!!";
+                currentUserData.level--;
+                if (currentUserData.level <= 0) {
+                    currentUserData.level = 1;
+                }
+                currentUserData.correctAnswer = 0;
             }
 
             /* call function to change question if true */
             await changeQuestion(currentUserData.level);
-            console.log(currentUserData)
         })
         .catch((error) => {
             console.error("Error:", error);
