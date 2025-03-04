@@ -1,5 +1,5 @@
 let questionData = [];
-let currentUserData = { id: 0, level: 1, answer: "", correctAnswer: 0 };
+let currentUserData = { id: 0, level: 1, question: "", answer: "", correctAnswer: 0 };
 const submitButton = document.getElementById("submit-button");
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,11 +21,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 container.textContent = questionNode.question;
                 currentUserData.id = questionNode.id;
                 currentUserData.level = questionNode.level;
-
-                currentIndex = questionData.indexOf(questionNode);
+                currentUserData.question = questionNode.question;
             } else {
                 container.textContent = "No question";
             }
+            console.log(currentUserData)
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -50,8 +50,10 @@ submitButton.addEventListener("click", function () {
     }
 
     document.getElementById("submit-button").disabled = true; // Disable button to prevent accidental double submission
+    document.getElementById("msg-container").textContent = "Please wait while we check your answer...";
+
     // POST request to server
-    fetch("/json", {
+    fetch("/json/mark", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -82,6 +84,7 @@ submitButton.addEventListener("click", function () {
 
             /* call function to change question if true */
             await changeQuestion(currentUserData.level);
+            console.log(currentUserData)
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -109,9 +112,31 @@ async function changeQuestion(requiredLevel) {
         container.textContent = selectedQuestion.question;
         currentUserData.id = selectedQuestion.id;
         currentUserData.level = selectedQuestion.level;
-
-        currentIndex = questionData.indexOf(selectedQuestion);
+        currentUserData.question = selectedQuestion.question;
     } else {
         container.textContent = "No question";
     }
+}
+
+function addNewQuestion(level) {
+    /* 
+        Add new question to the questionData array
+    */
+
+    fetch("/json/create", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ level: level }),
+    })
+        .then((response) => response.json())
+        .then((newQuestion) => {
+            console.log(newQuestion);
+            // questionData.push(newQuestion);
+            console.log("New question added");
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+        });
 }

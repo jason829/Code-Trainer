@@ -64,13 +64,22 @@ def get_questions():
     return jsonify(client_data)
 
 
-@main_blueprint.route("/json", methods=["POST"])
-def get_json():
+@main_blueprint.route("/json/mark", methods=["POST"])
+def check_answer():
     """
     Get JSON data from client
     """
     data = request.get_json()
-    question = server_data[data["id"]]["question"]
-    check = grade_question(data["answer"], question)
+    check = grade_question(data["answer"], data["question"])
 
     return {"result": check}
+
+@main_blueprint.route("/json/create", methods=["GET"])
+def create_question():
+    """
+    Create a new question
+    """
+    level = request.get_json()
+    question = create_question(level)
+    
+    return {"result": "success", "data": question}

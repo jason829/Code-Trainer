@@ -1,6 +1,15 @@
 import ollama
 import re
 import json
+from pydantic import BaseModel, ValidationError
+
+class Answer_Format(BaseModel):
+    feedback: str
+    total_mark: int
+    
+class Question_Format(BaseModel):
+    question: str
+    level: int
 
 ollama.create(
     model="deepseek-r1:analyser",
@@ -52,6 +61,12 @@ Level 2: Output text in console using print(), variables and input() (therefore 
 Level 3: Output numerical calculations in console using print() by taking user input with int(input()) and processing the input
 Level 4: Output a string based on user input using if-else statements using print()
 
+Use the following examples for reference:
+Level 1: Output 'Hello World!' using 'print()'
+Level 2: Ask the user to enter their name and then output that result using input() & print()
+Level 3: Get 2 integer inputs and add them together in a seperate variable and print the result
+Level 4: Ask the user to enter a number and output 'True' if the number is more than 10 and 'False' if the number is less than 10
+
 The maximum total mark is 30 and should be the sum of the following below. However, if the question does not require a section then assign that section 10 marks.
 
 Input Handling: X/10
@@ -61,9 +76,6 @@ Final Score: (X + Y + Z) / 30
 Feedback:
 - [Provide concise, constructive feedback on the entire implementation]
 - [Highlight any specific areas for improvement]```,
-
-Return a JSON object with the following structure
-{feedback, total_mark}
 """,
 )
 
@@ -99,9 +111,6 @@ Level 1: Output 'Hello World!' using 'print()'
 Level 2: Ask the user to enter their name and then output that result using input() & print()
 Level 3: Get 2 integer inputs and add them together in a seperate variable and print the result
 Level 4: Ask the user to enter a number and output 'True' if the number is more than 10 and 'False' if the number is less than 10
-
-Return a JSON object with the following structure
-{question, level}
 """,
 )
 
@@ -119,50 +128,53 @@ Return a JSON object with the following structure
 #         main()""",
 #         },
 #     ],
+#     format=Answer_Format.model_json_schema()
 # )
 
-# answer = response["message"]["content"]
-# match = re.search(r'\{\s*"feedback":\s*".*?",\s*"total_mark":\s*\d+\s*\}', answer, re.DOTALL)
-# if match:
-#     json_string = match.group(0)
-#     json_object = json.loads(json_string)
-#     print(json_object)
+# answer = Answer_Format.model_validate_json(response.message.content)
+# jsonobject = json.loads(response.message.content)
+# print(jsonobject)
 
-# response = ollama.chat(
-#     model="deepseek-r1:creator",
-#     options={"temperature": 0.5, "max_tokens": 50},
-#     messages=[
-#         {
-#             "role": "user",
-#             "content": f"Create a question for level 1",
-#         },
-#     ],
-# )
+response = ollama.chat(
+        model="deepseek-r1:creator",
+        options={"temperature": 0.5, "max_tokens": 50},
+        messages=[
+            {
+                "role": "user",
+                "content": f"Create a question for level 1",
+            },
+        ],
+        format=Question_Format.model_json_schema()
+    )
 
-# answer = response["message"]["content"]
-# print(answer)
+answer = Question_Format.model_validate_json(response.message.content) # Just to check if the format is correct
+json_object = json.loads(response.message.content)
+print(json_object)
 
 
 def grade_question(student_response, question):
     """Generate mark summary and feedback for a student's code submission."""
+
     response = ollama.chat(
         model="deepseek-r1:analyser",
         options={"temperature": 0.5, "max_tokens": 50},
         messages=[
             {
                 "role": "user",
-                "content": f"Question: {question}, Student submission: {student_response}",
+                "content": f"Question: {question}, Student submission: {student_response}, return as JSON",
             },
         ],
+        format=Answer_Format.model_json_schema()
     )
 
-    answer = response["message"]["content"]
-    match = re.search(
-        r'\{\s*"feedback":\s*".*?",\s*"total_mark":\s*\d+\s*\}', answer, re.DOTALL
-    )
-    if match:
-        json_string = match.group(0)
-        json_object = json.loads(json_string)
+    try:
+        answer = Answer_Format.model_validate_json(response.message.content)
+        print("Validation successful")
+        json_object = json.loads(response.message.content)
+    except ValidationError as e:
+        print("Validation error: \n", e)
+        json_object = json.dumps({"error": "Validation failed", "details": str(e)})
+    
     return json_object
 
 
@@ -174,17 +186,18 @@ def create_question(level):
         messages=[
             {
                 "role": "user",
-                "content": f"Create a question for level {level}",
+                "content": f"Create a question for level {level}, return as JSON",
             },
         ],
+        format=Question_Format.model_json_schema()
     )
 
-    answer = response["message"]["content"]
-    match = re.search(
-        r'\{\s*"question":\s*".*?",\s*"level":\s*\d+\s*\}', answer, re.DOTALL
-    )
-    if match:
-        json_string = match.group(0)
-        json_object = json.loads(json_string)
-
+    try:
+        answer = Question_Format.model_validate_json(response.message.content)
+        print("Validation successful")
+        json_object = json.loads(response.message.content)
+    except ValidationError as e:
+        print("Validation error: \n", e)
+        json_object = json.dumps({"error": "Validation failed", "details": str(e)})
+    
     return json_object
