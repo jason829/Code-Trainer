@@ -56,26 +56,15 @@ def interpret_csv():
     """
     all_data = open_csv("public/flask_app/routes/pvar/all_questions.csv")
     client_data = []
-    server_data = []
     for data in all_data:
         client_data.append(
             {
-                "id": data["id"],
                 "level": data["level"],
                 "question": data["question"],
-                "hint": data["hint"],
-            }
-        )
-        server_data.append(
-            {
-                "id": data["id"],
-                "level": data["level"],
-                "question": data["question"],
-                "answer": data["answer"],
             }
         )
 
-    return client_data, server_data
+    return client_data
 
 
 def questions(score, level, question_level):  # this is for the console version of code, moving to flask

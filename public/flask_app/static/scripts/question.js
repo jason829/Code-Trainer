@@ -1,36 +1,13 @@
-let questionData = [];
+let questionData;
 let currentUserData = { id: 0, level: 1, question: "", answer: "", correctAnswer: 0 };
 const submitButton = document.getElementById("submit-button");
+const questionContainer = document.getElementById("question-container");
 
 document.addEventListener("DOMContentLoaded", () => {
     /* 
-        Fetch questions from server and display them in the container.
+        Initial requests on page load
     */
-
-    const container = document.getElementById("question-container");
-
-    fetch("/api/questions")
-        .then((response) => response.json())
-        .then((fetchedData) => {
-            questionData = fetchedData; // Store fetched data in global variable
-            let id = 0;
-            // Display the first ID
-            const questionNode = questionData.find((item) => item.id === id);
-
-            if (questionNode) {
-                container.textContent = questionNode.question;
-                currentUserData.id = questionNode.id;
-                currentUserData.level = questionNode.level;
-                currentUserData.question = questionNode.question;
-            } else {
-                container.textContent = "No question";
-            }
-            console.log(currentUserData)
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-            container.textContent = "Failed to load questions.";
-        });
+    getQuestion();
 });
 
 submitButton.addEventListener("click", function () {
@@ -79,7 +56,6 @@ submitButton.addEventListener("click", function () {
                     "You have successfully completed this level!";
                 currentUserData.level++;
                 currentUserData.correctAnswer = 0;
-                await addNewQuestion(currentUserData.level)
             } else if (currentUserData.correctAnswer <= -3) {
                 document.getElementById("msg-container").textContent =
                     "You have gotten 3 wrong in a row... Don't give up yet!!";
@@ -91,7 +67,7 @@ submitButton.addEventListener("click", function () {
             }
 
             /* call function to change question if true */
-            await changeQuestion(currentUserData.level);
+            await getQuestion();
         })
         .catch((error) => {
             console.error("Error:", error);
@@ -103,52 +79,54 @@ submitButton.addEventListener("click", function () {
         });
 });
 
-async function changeQuestion(requiredLevel) {
+async function getQuestion() {
     /* 
         Change the question displayed in the container
     */
-
-    const container = document.getElementById("question-container");
-    const questionNode = questionData.filter(
-        (item) => item.level === requiredLevel
-    );
-
-    if (questionNode) {
-        const random = Math.floor(Math.random() * questionNode.length);
-        selectedQuestion = questionNode[random];
-        container.textContent = selectedQuestion.question;
-        currentUserData.id = selectedQuestion.id;
-        currentUserData.level = selectedQuestion.level;
-        currentUserData.question = selectedQuestion.question;
-    } else {
-        container.textContent = "No question";
-    }
-}
-
-async function addNewQuestion(level) {
-    /* 
-        Add new question to the questionData array
-    */
-
-    fetch("/json/create", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ level: level }),
-    })
+    fetch(`/api/questions?level=${currentUserData.level}`)
         .then((response) => response.json())
-        .then((newQuestion) => {
-            if (newQuestion.level === 0) {
-                console.error("Error has occurred server side");
-                return;
-            }
+        .then((fetchedData) => {
+            questionData = fetchedData; // Store fetched data in global variable
 
-            console.log(newQuestion);
-            // questionData.push(newQuestion);
-            console.log("New question added");
+            if (questionData) {
+                questionContainer.textContent = questionData.question;
+                currentUserData.question = questionData.question;
+            } else {
+                questionContainer.textContent = "No question";
+            }
         })
         .catch((error) => {
             console.error("Error:", error);
+            questionContainer.textContent = "Failed to load questions.";
         });
 }
+
+
+// DELETE MAYBE ---- REFACTORING :(
+// async function addNewQuestion(level) {
+//     /* 
+//         Add new question to the questionData array
+//     */
+
+//     fetch("/json/create", {
+//         method: "POST",
+//         headers: {
+//             "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({ level: level }),
+//     })
+//         .then((response) => response.json())
+//         .then((newQuestion) => {
+//             if (newQuestion.level === 0) {
+//                 console.error("Error has occurred server side");
+//                 return;
+//             }
+
+//             console.log(newQuestion);
+//             // questionData.push(newQuestion);
+//             console.log("New question added");
+//         })
+//         .catch((error) => {
+//             console.error("Error:", error);
+//         });
+// }
