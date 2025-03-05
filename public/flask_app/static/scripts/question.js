@@ -1,5 +1,5 @@
 let questionData;
-let currentUserData = { id: 0, level: 1, question: "", answer: "", correctAnswer: 0 };
+let currentUserData = { level: 1, question: "", answer: "", correctAnswer: 0 };
 const submitButton = document.getElementById("submit-button");
 const questionContainer = document.getElementById("question-container");
 

@@ -39,6 +39,33 @@
 #start-container {
     font-size: 20px;
     white-space: pre-wrap;
+    margin: 20px auto;
+}
+
+#username-input {
+    display: block;
+    margin: 20px auto;
+    width: 10%;
+    height: 50px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+    white-space: pre-wrap;
+    background-color: #f8f8f8;
+}
+
+#confirm-username {
+    display: block;
+    margin: 20px auto;
+    width: 10%;
+    height: 50px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    white-space: pre-wrap;
 }
 
 #submit-button {
@@ -124,6 +151,13 @@
     background-color: #007a63;
 }
 
+.btn:disabled,
+.btn[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
 .fa {
     font-size: 20px;
     background-color: #009579;
@@ -134,3 +168,8 @@ body {
 }
 
 * {background-color: rgb(117, 146, 231)}
+
+h1 {
+    margin: 100px auto;
+    white-space: pre-wrap;
+}
