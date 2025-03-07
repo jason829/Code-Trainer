@@ -91,7 +91,7 @@ def check_answer():
     Get JSON data from client
     """
     data = request.get_json()
-    check = grade_question(data["answer"], data["question"])
+    check = grade_question(data["answer"], data["question"], data["level"])
 
     if "error" in check:
         # If an error occured then let the user know. Stops crashing

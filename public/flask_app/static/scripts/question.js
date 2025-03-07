@@ -41,6 +41,7 @@ submitButton.addEventListener("click", function () {
         .then(async (questionResult) => {
             console.log("Successful response");
             result = questionResult.result;
+            console.log(result)
 
             document.getElementById("msg-container").textContent =
                 "Feedback: " + result.feedback;
