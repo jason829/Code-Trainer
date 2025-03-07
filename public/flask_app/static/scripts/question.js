@@ -58,8 +58,6 @@ submitButton.addEventListener("click", function () {
                 currentUserData.level++;
                 currentUserData.correctAnswer = 0;
             } else if (currentUserData.correctAnswer <= -3) {
-                document.getElementById("msg-container").textContent =
-                    "You have gotten 3 wrong in a row... Don't give up yet!!";
                 currentUserData.level--;
                 if (currentUserData.level <= 0) {
                     currentUserData.level = 1;
