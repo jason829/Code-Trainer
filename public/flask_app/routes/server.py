@@ -118,3 +118,31 @@ def update_user_details():
         print("No user found")
     
     return {"Success": result}
+
+@main_blueprint.route("/json/newUser", methods=["POST"])
+def add_new_user():
+    """
+    User has created a new user, add this new user to the json file
+    """
+    duplicate_user = False
+    result = False
+    data = request.get_json()
+    new_username, new_user_pass = data["user"], data["pass"]
+    
+    all_users = open_json("public/flask_app/routes/users.json", "r")
+    
+    for user in all_users:
+        if user["username"] == new_username:
+            duplicate_user = True
+            print("Username is taken")
+            break
+        
+    
+    if not duplicate_user:
+        new_record = {"username": new_username, "password": new_user_pass, "level": 1}
+        all_users.append(new_record)
+        with open("public/flask_app/routes/users.json", "w") as file:
+            json.dump(all_users, file, indent=4)
+            result = True
+        
+    return {"Success": result}

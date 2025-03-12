@@ -28,7 +28,22 @@
                 <button type="submit" id="confirm-username" class="btn">ENTER</button>
             </form>
         </div>
-
+        
+        <div style="text-align: center;">
+            <button type="button" id="create-new-user" class="btn" onclick="openForm()">Create new user</button>
+        </div>
+        
+        <div id="new-user-popup">
+            <form id="user-form">
+                <span class="close-btn" onclick="closeForm()">&times;</span>
+                <p>Create New User</p>
+                <input type="text" id="username" placeholder="Enter new username" required></input>
+                <input type="password" id="password" placeholder="Enter new password" required></input>
+                <input type="password" id="confirm-password" placeholder="Confirm new password" required></input>
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+        
         <div id="msg-container" style="text-align: center"></div>
 
         <div id="start-container">
