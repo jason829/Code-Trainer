@@ -1,6 +1,7 @@
 const form = document.getElementById("form");
 const confirmUsername = document.getElementById("confirm-username");
 const startButton = document.getElementById("start-button");
+startButton.disabled = true; // disabled button on page load for consistency
 
 document.getElementById("user-form").addEventListener("submit", function (event) {
     event.preventDefault();
@@ -22,7 +23,7 @@ document.getElementById("user-form").addEventListener("submit", function (event)
         body: JSON.stringify({ user: username, pass: password }),
     }).then((response) => response.json())
         .then((data) => {
-            if (data.success == false) {
+            if (data.Success == false) {
                 window.alert("Username is already taken")
                 return;
             }
@@ -55,13 +56,14 @@ function getUsername(event) {
     }).then((response) => response.json())
         .then((data) => {
             if (data.success == false) {
-                console.log("FAILED AUTHENTICATION");
-                document.getElementById("msg-container").textContent =
+                window.alert("Incorrect username/password")
+                document.getElementById("msg").textContent =
                     "Failed to authenticate";
+                startButton.disabled = true;
                 return;
             }
 
-            document.getElementById("msg-container").textContent =
+            document.getElementById("msg").textContent =
                 "Successful... Please click on 'Start'";
 
             localStorage.setItem("user", username)

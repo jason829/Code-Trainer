@@ -44,8 +44,7 @@ submitButton.addEventListener("click", function () {
             result = questionResult.result;
             console.log(result)
 
-            document.getElementById("msg-container").textContent =
-                "Feedback: " + result.feedback;
+            document.getElementById("msg-container").textContent = "Feedback: " + result.feedback;
 
             // Check mark thresholds
             if (result.total_mark >= 20) currentUserData.correctAnswer++;
@@ -54,8 +53,7 @@ submitButton.addEventListener("click", function () {
 
             // Check if user has answered 3 questions correctly, increment level
             if (currentUserData.correctAnswer >= 3) {
-                document.getElementById("msg-container").textContent =
-                    "You have successfully completed this level!";
+                document.getElementById("msg-container").textContent = "You have successfully completed this level!";
                 currentUserData.level++;
                 currentUserData.correctAnswer = 0;
                 updateLevel()
@@ -85,8 +83,7 @@ async function getQuestion() {
     /* 
         Change the question displayed in the container
     */
-    document.getElementById("msg-container").textContent =
-        "Please wait while we get a question...";
+    questionContainer.textContent = "Please wait while we get a question...";
 
     fetch(`/api/questions?level=${currentUserData.level}`)
         .then((response) => response.json())
@@ -103,7 +100,7 @@ async function getQuestion() {
         .catch((error) => {
             console.error("Error:", error);
             questionContainer.textContent = "Failed to load questions.";
-        }).finally(() => document.getElementById("msg-container").textContent = "")
+        })
 }
 
 function updateLevel() {

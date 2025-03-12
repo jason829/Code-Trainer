@@ -29,6 +29,14 @@
     white-space: pre-wrap;
 }
 
+#msg {
+    display: block;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 20px;
+    white-space: pre-wrap;
+}
+
 #base-container {
     margin: 5px auto;
     padding: 5px;
