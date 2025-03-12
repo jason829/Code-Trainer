@@ -58,12 +58,14 @@ submitButton.addEventListener("click", function () {
                     "You have successfully completed this level!";
                 currentUserData.level++;
                 currentUserData.correctAnswer = 0;
+                updateLevel()
             } else if (currentUserData.correctAnswer <= -3) {
                 currentUserData.level--;
                 if (currentUserData.level <= 0) {
                     currentUserData.level = 1;
                 }
                 currentUserData.correctAnswer = 0;
+                updateLevel()
             }
 
             /* call function to change question if true */
@@ -83,6 +85,9 @@ async function getQuestion() {
     /* 
         Change the question displayed in the container
     */
+    document.getElementById("msg-container").textContent =
+        "Please wait while we get a question...";
+
     fetch(`/api/questions?level=${currentUserData.level}`)
         .then((response) => response.json())
         .then((fetchedData) => {
@@ -98,7 +103,26 @@ async function getQuestion() {
         .catch((error) => {
             console.error("Error:", error);
             questionContainer.textContent = "Failed to load questions.";
-        });
+        }).finally(() => document.getElementById("msg-container").textContent = "")
+}
+
+function updateLevel() {
+    /* 
+        Update user info whenever the user changes level
+    */
+    localStorage.setItem(localStorage.getItem("user"), currentUserData.level);
+    const updateData = { user: localStorage.getItem("user"), level: parseInt(localStorage.getItem(localStorage.getItem("user")), 10) };
+
+    fetch("/json/update", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData),
+    }).then((response) => {
+        console.log(response.json);
+    })
+    .catch((e) => console.error("ERROR: ", e))
 }
 
 

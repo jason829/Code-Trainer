@@ -81,7 +81,7 @@ def get_username():
     data = request.get_json()
 
     username, password = data["user"], data["pass"]
-    all_users = open_json("public/flask_app/routes/users.json")
+    all_users = open_json("public/flask_app/routes/users.json", "r")
     response_data = {"success": False, "level": 1}
 
     for user in all_users:
@@ -90,3 +90,31 @@ def get_username():
             break
 
     return jsonify(response_data)
+
+@main_blueprint.route("/json/update", methods=["POST"])
+def update_user_details():
+    """
+    Update user information in users.json
+    """
+    user_found = False
+    result = False
+    data = request.get_json()
+    tar_user = data["user"]
+    new_level = data["level"]
+    
+    all_users = open_json("public/flask_app/routes/users.json", "r")
+    
+    for user in all_users:
+        if user["username"] == tar_user:
+            user["level"] = new_level
+            user_found = True
+            break
+    
+    if user_found:
+        with open("public/flask_app/routes/users.json", "w") as file:
+            json.dump(all_users, file, indent=4)
+            result = True
+    else:
+        print("No user found")
+    
+    return {"Success": result}

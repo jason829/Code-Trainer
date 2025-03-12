@@ -86,7 +86,7 @@ Feedback:
 ollama.create(
     model="deepseek-r1:creator",
     from_="deepseek-r1:latest",
-    system="""You are a Python 3.8+ instructor responsible for creating practice questions to test students programming skills using the structured logical programming approach below. 
+    system="""You are a Python 3.8+ instructor responsible for creating practice questions to test new students programming skills using the structured logical programming approach below. 
 
 ### **Example Structure for Reference**
 Questions should generally follow this logical structure:
@@ -111,10 +111,12 @@ Level 3: Output numerical calculations in console using print() by taking user i
 Level 4: Output a string based on user input using if-else statements using print()
 
 Use the following examples for reference:
-Level 1: Output 'Hello World!' using 'print()'
-Level 2: Ask the user to enter their name and then output that result using input() & print()
-Level 3: Get 2 integer inputs and add them together in a seperate variable and print the result
-Level 4: Ask the user to enter a number and output 'True' if the number is more than 10 and 'False' if the number is less than 10
+Level 1: Output 'Hello World!' using 'print()'. TIP: the syntax for print() is 'print('string that is outputted')'
+Level 2: Ask the user to enter their name and then output that result using input() & print(). TIP: the syntax for input() is 'name = input('what is your name')'
+Level 3: Get 2 integer inputs and add them together in a seperate variable and print the result. TIP: the syntax for addition is 'result = integer_1 + integer_2'
+Level 4: Ask the user to enter a number and output 'True' if the number is more than 10 and 'False' if the number is less than 10. TIP: the syntax for conditionals are 'if result < 10:'
+
+For each question a tip must be included.
 """,
 )
 

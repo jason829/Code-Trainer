@@ -8,11 +8,11 @@ import csv
 import random
 import json
 
-def open_json(file_path):
+def open_json(file_path, method):
     """
     Open json based on path and return dict
     """
-    with open(file_path, "r") as file:
+    with open(file_path, method) as file:
         json_object = json.loads(file.read())
     return json_object
 
