@@ -6,7 +6,15 @@ import re
 import time
 import csv
 import random
+import json
 
+def open_json(file_path):
+    """
+    Open json based on path and return dict
+    """
+    with open(file_path, "r") as file:
+        json_object = json.loads(file.read())
+    return json_object
 
 def open_csv(file_path):
     """

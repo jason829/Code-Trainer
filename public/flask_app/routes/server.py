@@ -1,20 +1,15 @@
-""" 
+"""
 Server side code for the python learning project
 """
 
-import sys
-import os
-import psycopg2
 import random
-from dotenv import load_dotenv
 from flask import Blueprint, render_template, jsonify, request
 from .pvar.global_f import *
 from .model.check_gen import *
 
 main_blueprint = Blueprint("main", __name__)
-
 question_data = interpret_csv()
-user_data = {"userID": 0, "level": 1, "score": 0}
+
 
 def gen_question(level):
     """
@@ -28,28 +23,6 @@ def gen_question(level):
         print("ERROR HAS OCCURRED WHEN CREATING NEW QUESTION")
 
     return question
-
-def connect_to_db():
-    load_dotenv()
-    DB_USER = os.getenv("fyp_db_user")
-    DB_PASS = os.getenv("fyp_db_pass")
-
-    conn = psycopg2.connect(
-        database="fyp_db", user=DB_USER, password=DB_PASS, host="0.0.0.0", port="5432"
-    )
-
-    return conn
-
-
-# how to use db in code
-# conn = connect_to_db()
-# cur = conn.cursor()
-
-# # cur.execute()
-# conn.commit()
-
-# cur.close()
-# conn.close()
 
 
 @main_blueprint.route("/")
@@ -76,12 +49,12 @@ def get_questions():
     """
     req_level = request.args.get("level", default="1")
     temp_q_arr = [x for x in question_data if x["level"] == int(req_level)]
-    
+
     if len(temp_q_arr) <= 0:
         random_q = gen_question(req_level)
     else:
         random_q = random.choice((temp_q_arr))
-    
+
     return jsonify(random_q)
 
 
@@ -98,3 +71,22 @@ def check_answer():
         check = {"feedback": "ERROR OCCURRED WITH MARKING", "total_mark": 0}
 
     return {"result": check}
+
+
+@main_blueprint.route("/json/username", methods=["POST"])
+def get_username():
+    """
+    Get data from database with username
+    """
+    data = request.get_json()
+
+    username, password = data["user"], data["pass"]
+    all_users = open_json("public/flask_app/routes/users.json")
+    response_data = {"success": False, "level": 1}
+
+    for user in all_users:
+        if user["username"] == username and user["password"] == password:
+            response_data = {"success": True, "level": user["level"]}
+            break
+
+    return jsonify(response_data)

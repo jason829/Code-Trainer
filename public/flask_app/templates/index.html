@@ -10,6 +10,10 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script
+            src="{{ url_for('static', filename='scripts/index.js') }}"
+            defer
+        ></script>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">    
     </head>
     <body>
@@ -18,14 +22,17 @@
         </div>
 
         <div>
-            <form>
-                <input type="text" id="username-input" placeholder="Enter your username"></input>
-                <button type="button" id="confirm-username" class="btn">ENTER</button>
+            <form id="form" onsubmit="getUsername(event)">
+                <input type="text" id="username-input" placeholder="Enter your username" required></input>
+                <input type="password" id="password-input" placeholder="Enter your password" required></input>
+                <button type="submit" id="confirm-username" class="btn">ENTER</button>
             </form>
         </div>
 
+        <div id="msg-container" style="text-align: center"></div>
+
         <div id="start-container">
-            <a href="question"><button type="button" class="btn" disabled>START</button></a>
+            <a href="question"><button type="b" id="start-button" class="btn" disabled>START</button></a>
         </div>
     </body>
 </html>

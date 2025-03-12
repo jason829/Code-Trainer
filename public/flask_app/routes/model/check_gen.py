@@ -77,7 +77,7 @@ Output Handling: Z/10
 Final Score: (X + Y + Z) / 30
 Feedback:
 - [Provide concise, constructive feedback on the entire implementation]
-- [Highlight syntax errors and provide appropriate fixes to these errors.]
+- [Highlight syntax errors and provide appropriate fixes to these errors explained concisely and simply for beginners.]
 - [Highlight any specific areas for improvement]
 ```,
 """,

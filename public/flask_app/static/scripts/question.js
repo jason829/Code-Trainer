@@ -1,5 +1,6 @@
 let questionData;
-let currentUserData = { level: 1, question: "", answer: "", correctAnswer: 0 };
+const levelInfo = parseInt(localStorage.getItem(localStorage.getItem("user")), 10);
+let currentUserData = { level: levelInfo, question: "", answer: "", correctAnswer: 0 };
 const submitButton = document.getElementById("submit-button");
 const questionContainer = document.getElementById("question-container");
 
