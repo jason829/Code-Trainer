@@ -12,8 +12,8 @@ class Question_Format(BaseModel):
     level: int
 
 ollama.create(
-    model="deepseek-r1:analyser",
-    from_="deepseek-r1:latest",
+    model="qwen2.5-coder:analyser",
+    from_="qwen2.5-coder:latest",
     system="""You are a Python 3.8+ instructor responsible for grading student code submissions. Your task is to assess their implementation based on a structured logical programming approach. 
 
 ### **Example Structure for Reference**
@@ -56,6 +56,7 @@ You will assess the student's implementation based on the following three catego
 
 If answer is not in the **Example Structure for Reference** format, deduct 0 - 5 marks based on the severity of the deviation.
 If the student has anwered with a solution that contains syntax errors in Python 3.8+ then ensure this is noted in your feedback and deduct 5 marks.
+If the student has forgotten to call the function main() then deduct 2 marks and highlight that the function should be called.
 
 There are levels of difficulty for each question. Please use these as reference for marking.
 Level 1: Output text in console using print() (therefore ignore input and processing)
@@ -84,8 +85,8 @@ Feedback:
 )
 
 ollama.create(
-    model="deepseek-r1:creator",
-    from_="deepseek-r1:latest",
+    model="gemma3:creator",
+    from_="gemma3:4b",
     system="""You are a Python 3.8+ instructor responsible for creating practice questions to test new students programming skills using the structured logical programming approach below. 
 
 ### **Example Structure for Reference**
@@ -110,7 +111,7 @@ Level 2: Output text in console using print(), variables and input() (therefore 
 Level 3: Output numerical calculations in console using print() by taking user input with int(input()) and processing the input
 Level 4: Output a string based on user input using if-else statements using print()
 
-Use the following examples for reference:
+Use the following examples to guide the structure of how you create your questions:
 Level 1: Output 'Hello World!' using 'print()'. TIP: the syntax for print() is 'print('string that is outputted')'
 Level 2: Ask the user to enter their name and then output that result using input() & print(). TIP: the syntax for input() is 'name = input('what is your name')'
 Level 3: Get 2 integer inputs and add them together in a seperate variable and print the result. TIP: the syntax for addition is 'result = integer_1 + integer_2'
@@ -121,7 +122,7 @@ For each question a tip must be included.
 )
 
 # response = ollama.chat(
-#     model="deepseek-r1:analyser",
+#     model="qwen2.5-coder:analyser",
 #     options={"temperature": 0.5, "max_tokens": 50},
 #     messages=[
 #         {
@@ -129,9 +130,9 @@ For each question a tip must be included.
 #             "content": """ Question: Output 'Hello World!' using 'print()'
 #          Student Response:
 #          def main():
-#             print('Hello World!')
-
-#         main()""",
+#             print("Hello World!")
+#         main()
+#         """,
 #         },
 #     ],
 #     format=Answer_Format.model_json_schema()
@@ -142,12 +143,12 @@ For each question a tip must be included.
 # print(jsonobject)
 
 # response = ollama.chat(
-#         model="deepseek-r1:creator",
-#         options={"temperature": 0.5},
+#         model="gemma3:creator",
+#         options={"temperature": 0.7, "max_tokens": 50},
 #         messages=[
 #             {
 #                 "role": "user",
-#                 "content": f"Create 3 questions for level 1",
+#                 "content": f"Create a questions for level 2",
 #             },
 #         ],
 #         format=Question_Format.model_json_schema()
@@ -163,7 +164,7 @@ def grade_question(student_response, question, level):
     """Generate mark summary and feedback for a student's code submission."""
 
     response = ollama.chat(
-        model="deepseek-r1:analyser",
+        model="qwen2.5-coder:analyser",
         options={"temperature": 0.5, "max_tokens": 50},
         messages=[
             {
@@ -188,8 +189,8 @@ def grade_question(student_response, question, level):
 def create_question(level):
     """Create a new question in the system."""
     response = ollama.chat(
-        model="deepseek-r1:creator",
-        options={"temperature": 0.5, "max_tokens": 50},
+        model="gemma3:creator",
+        options={"temperature": 0.7, "max_tokens": 50},
         messages=[
             {
                 "role": "user",
