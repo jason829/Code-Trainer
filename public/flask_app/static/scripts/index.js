@@ -60,6 +60,7 @@ function getUsername(event) {
                 document.getElementById("msg").textContent =
                     "Failed to authenticate";
                 startButton.disabled = true;
+                confirmUsername.disabled = false;
                 return;
             }
 
@@ -70,6 +71,7 @@ function getUsername(event) {
             localStorage.setItem(username, data.level);
 
             startButton.disabled = false;
+            confirmUsername.disabled = false;
         })
         .catch((e) => {
             console.error("ERROR: " + e);

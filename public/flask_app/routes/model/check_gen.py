@@ -81,6 +81,8 @@ Feedback:
 - [Highlight syntax errors and provide appropriate fixes to these errors explained concisely and simply for beginners.]
 - [Highlight any specific areas for improvement]
 ```,
+
+Repond in 2nd person (a set of words or forms (such as pronouns or verb forms) that refer to the person that the speaker or writer is addressing)
 """,
 )
 
