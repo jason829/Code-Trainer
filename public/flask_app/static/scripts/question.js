@@ -91,7 +91,7 @@ async function getQuestion() {
             questionData = fetchedData; // Store fetched data in global variable
 
             if (questionData) {
-                questionContainer.textContent = questionData.question;
+                questionContainer.textContent = "QUESTION: " + questionData.question;
                 currentUserData.question = questionData.question;
             } else {
                 questionContainer.textContent = "No question";
