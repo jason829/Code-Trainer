@@ -36,8 +36,24 @@ def open_csv(file_path):
 
     return data
 
+def interpret_csv():
+    """
+    Formatting the data from the csv into 2 variables
+    1 for sending to client and other to remain on server
+    """
+    all_data = open_csv("public/flask_app/routes/pvar/all_questions.csv")
+    client_data = []
+    for data in all_data:
+        client_data.append(
+            {
+                "level": data["level"],
+                "question": data["question"],
+            }
+        )
 
-def check_answer(user_answer_data, server_data):  # +++++++++++ FINISH THIS FUNCTION  need chagne how checking works as well+++++++++++++
+    return client_data
+
+def check_answer(user_answer_data, server_data): # Unused function, AI analysis is used instead of regexp checks
     """
     Check user answer against the correct answer
     """
@@ -56,26 +72,12 @@ def check_answer(user_answer_data, server_data):  # +++++++++++ FINISH THIS FUNC
         print("Provided answer is incorrect")
         return False
 
+'''
+Below are functions used in a console based prototype.
+This does not use AI but instead uses regex to check the answer.
+'''
 
-def interpret_csv():
-    """
-    Formatting the data from the csv into 2 variables
-    1 for sending to client and other to remain on server
-    """
-    all_data = open_csv("public/flask_app/routes/pvar/all_questions.csv")
-    client_data = []
-    for data in all_data:
-        client_data.append(
-            {
-                "level": data["level"],
-                "question": data["question"],
-            }
-        )
-
-    return client_data
-
-
-def questions(score, level, question_level):  # this is for the console version of code, moving to flask
+def questions(score, level, question_level):
     """
     Display question, check answer and increment score
     Returns score value after user has answered
