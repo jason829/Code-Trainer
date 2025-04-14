@@ -93,9 +93,7 @@ def questions(score, level, question_level):
 
     # Display question and check answer using regex
     for question in test_q:
-        print(
-            "Enter your answer to the following question. When happy press enter on an empty line"
-        )
+        print("Enter your answer to the following question. When happy press enter on an empty line")
         print(f"{question["question"]}")
         lines = []
         # Multiple line answers
