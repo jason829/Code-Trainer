@@ -5,11 +5,11 @@ from pydantic import BaseModel, ValidationError, Field
 
 class Answer_Format(BaseModel):
     feedback: str = Field(..., min_length=1)
-    total_mark: int
+    total_mark: int = Field(..., gt=-1, le=30)
     
 class Question_Format(BaseModel):
     question: str = Field(..., min_length=1)
-    level: int
+    level: int = Field(..., gt=0)
 
 ollama.create(
     model="qwen2.5-coder:analyser",
