@@ -1,5 +1,15 @@
 """
 Pytest test cases for the Flask app model schema validation
+
+Schemas for reference:
+
+class Answer_Format(BaseModel):
+    feedback: str = Field(..., min_length=1)
+    total_mark: int = Field(..., gt=-1, le=30)
+    
+class Question_Format(BaseModel):
+    question: str = Field(..., min_length=1)
+    level: int = Field(..., gt=0)
 """
 
 import pytest
