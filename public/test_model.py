@@ -75,6 +75,11 @@ def test_invalid_feedback_missing_field():
         Answer_Format(**response)
 
 
+def test_invalid_mark_missing_field():
+    response = {"feedback": "Code is correct"}
+    with pytest.raises(ValidationError):
+        Answer_Format(**response)
+
 """
 Test cases for Schema validation - Question_Format
 """
@@ -100,7 +105,13 @@ def test_invalid_empty_question():
         Question_Format(**response)
 
 
-def test_invalid_feedback_missing_field():
+def test_invalid_question_missing_field():
     response = {"level": 4}
+    with pytest.raises(ValidationError):
+        Question_Format(**response)
+
+
+def test_invalid_level_missing_field():
+    response = {"question": "this is a question"}
     with pytest.raises(ValidationError):
         Question_Format(**response)
