@@ -8,7 +8,7 @@ from .pvar.global_f import *
 from .model.check_gen import *
 
 main_blueprint = Blueprint("main", __name__)
-question_data = interpret_csv()
+# question_data = interpret_csv()
 
 
 def gen_question(level):
@@ -48,12 +48,7 @@ def get_questions():
     Send data to client as JSON
     """
     req_level = request.args.get("level", default="1")
-    temp_q_arr = [x for x in question_data if x["level"] == int(req_level)]
-
-    if len(temp_q_arr) <= 0:
-        random_q = gen_question(req_level)
-    else:
-        random_q = random.choice((temp_q_arr))
+    random_q = gen_question(req_level)
 
     return jsonify(random_q)
 
@@ -91,6 +86,7 @@ def get_username():
 
     return jsonify(response_data)
 
+
 @main_blueprint.route("/json/update", methods=["POST"])
 def update_user_details():
     """
@@ -101,23 +97,24 @@ def update_user_details():
     data = request.get_json()
     tar_user = data["user"]
     new_level = data["level"]
-    
+
     all_users = open_json("public/flask_app/routes/users.json", "r")
-    
+
     for user in all_users:
         if user["username"] == tar_user:
             user["level"] = new_level
             user_found = True
             break
-    
+
     if user_found:
         with open("public/flask_app/routes/users.json", "w") as file:
             json.dump(all_users, file, indent=4)
             result = True
     else:
         print("No user found")
-    
+
     return {"Success": result}
+
 
 @main_blueprint.route("/json/newUser", methods=["POST"])
 def add_new_user():
@@ -128,21 +125,20 @@ def add_new_user():
     result = False
     data = request.get_json()
     new_username, new_user_pass = data["user"], data["pass"]
-    
+
     all_users = open_json("public/flask_app/routes/users.json", "r")
-    
+
     for user in all_users:
         if user["username"] == new_username:
             duplicate_user = True
             print("Username is taken")
             break
-        
-    
+
     if not duplicate_user:
         new_record = {"username": new_username, "password": new_user_pass, "level": 1}
         all_users.append(new_record)
         with open("public/flask_app/routes/users.json", "w") as file:
             json.dump(all_users, file, indent=4)
             result = True
-        
+
     return {"Success": result}

@@ -82,7 +82,15 @@ Feedback:
 - [Highlight any specific areas for improvement]
 ```,
 
-Repond in 2nd person (a set of words or forms (such as pronouns or verb forms) that refer to the person that the speaker or writer is addressing)
+Respond in 2nd person (a set of words or forms (such as pronouns or verb forms) that refer to the person that the speaker or writer is addressing)
+
+Do not give the user the answer to the question. Instead provide a hint or tip to help them find the answer themselves.
+### **Example Feedback for Reference**
+```
+Feedback:
+- Your code is well structured and follows the logical programming approach.
+- You have correctly implemented the input handling and output generation. 
+
 """,
 )
 
@@ -108,7 +116,7 @@ def main():
 main()
 ```
 There are levels of difficulty for each question. Please ensure that the question is appropriate for the selected level that is based on the structure above.
-Level 1: Output text in console using print() (therefore ignore input and processing)
+Level 1: Output text in console using print() (therefore ignore input and processing). Use a variety of strings and numbers to output.
 Level 2: Output text in console using print(), variables and input() (therefore ignore processing)
 Level 3: Output numerical calculations in console using print() by taking user input with int(input()) and processing the input
 Level 4: Output a string based on user input using if-else statements using print()
@@ -120,6 +128,8 @@ Level 3: Get 2 integer inputs and add them together in a seperate variable and p
 Level 4: Ask the user to enter a number and output 'True' if the number is more than 10 and 'False' if the number is less than 10. TIP: the syntax for conditionals are 'if result < 10:'
 
 For each question a tip must be included.
+
+Respond in 2nd person (a set of words or forms (such as pronouns or verb forms) that refer to the person that the speaker or writer is addressing)
 """,
 )
 
@@ -150,7 +160,7 @@ For each question a tip must be included.
 #         messages=[
 #             {
 #                 "role": "user",
-#                 "content": f"Create a questions for level 2",
+#                 "content": f"Create a questions for level 3",
 #             },
 #         ],
 #         format=Question_Format.model_json_schema()
@@ -171,7 +181,7 @@ def grade_question(student_response, question, level):
         messages=[
             {
                 "role": "user",
-                "content": f"Mark the following question with its respective student answer. Question: {question}, Student submission: {student_response}, Level: {level}",
+                "content": f"Mark the following question with its respective student answer. Question: '{question}', Student submission: '{student_response}', Level: '{level}'",
             },
         ],
         format=Answer_Format.model_json_schema()
