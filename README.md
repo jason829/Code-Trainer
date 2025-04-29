@@ -3,6 +3,7 @@
 ## Setup Guide
 
 - Install Ollama on your device. [Click here for Ollama installation](https://ollama.com/)
-- Create python virtual environment (python 3.12)
-- install libraries in requirements.txt
-- run [this file](public/run.py)
+- Install Python 3.12
+- Create Python virtual environment and activate
+- install libraries in [requirements.txt](requirements.txt) (run command 'pip install -r requirements.txt')
+- Run [this file](public/run.py) and then go to <http://127.0.0.1:5000>
