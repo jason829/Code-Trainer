@@ -7,3 +7,7 @@
 - install libraries in requirements.txt
 - Create database, ensure you have PostgreSQL installed on your machine and run [this file](public/flask_app/routes/init_db.py)
 - run [this file](public/run.py)
+
+## Docker
+
+gunicorn -w 4 -b 0.0.0.0:8000 "public.flask_app:create_app()"
