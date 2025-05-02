@@ -8,7 +8,6 @@ from .pvar.global_f import *
 from .model.check_gen import *
 
 main_blueprint = Blueprint("main", __name__)
-# question_data = interpret_csv()
 
 
 def gen_question(level):

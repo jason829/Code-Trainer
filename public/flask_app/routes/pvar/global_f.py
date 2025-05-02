@@ -1,5 +1,8 @@
 """
 Library of useful functions for server side of the application
+
+Also contains console based prototype which doesn't work anymore (CSV changes) and doesn't use AI
+Its purpose here is for context.
 """
 
 import re
