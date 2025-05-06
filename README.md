@@ -1,5 +1,7 @@
 # Jason Nghiem - UOP Final year project
 
+[Link to Github page](https://github.com/jason829/Code-Trainer)
+
 ## Setup Guide
 
 - Install Ollama on your device. [Click here for Ollama installation](https://ollama.com/)
