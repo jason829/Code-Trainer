@@ -65,7 +65,8 @@ submitButton.addEventListener("click", function () {
                 currentUserData.correctAnswer = 0;
                 updateLevel()
             }
-
+            
+            // console.log(currentUserData);
             /* call function to change question if true */
             await getQuestion();
         })
